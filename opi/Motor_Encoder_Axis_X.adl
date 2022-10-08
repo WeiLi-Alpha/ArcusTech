@@ -1,0 +1,503 @@
+
+file {
+	name="Motor_Encoder_Axis_X.adl"
+	version=030114
+}
+display {
+	object {
+		x=869
+		y=91
+		width=545
+		height=393
+	}
+	clr=14
+	bclr=5
+	cmap=""
+	gridSpacing=5
+	gridOn=0
+	snapToGrid=0
+}
+"color map" {
+	ncolors=65
+	colors {
+		ffffff,
+		ececec,
+		dadada,
+		c8c8c8,
+		bbbbbb,
+		aeaeae,
+		9e9e9e,
+		919191,
+		858585,
+		787878,
+		696969,
+		5a5a5a,
+		464646,
+		2d2d2d,
+		000000,
+		00d800,
+		1ebb00,
+		339900,
+		2d7f00,
+		216c00,
+		fd0000,
+		de1309,
+		be190b,
+		a01207,
+		820400,
+		5893ff,
+		597ee1,
+		4b6ec7,
+		3a5eab,
+		27548d,
+		fbf34a,
+		f9da3c,
+		eeb62b,
+		e19015,
+		cd6100,
+		ffb0ff,
+		d67fe2,
+		ae4ebc,
+		8b1a96,
+		610a75,
+		a4aaff,
+		8793e2,
+		6a73c1,
+		4d52a4,
+		343386,
+		c7bb6d,
+		b79d5c,
+		a47e3c,
+		7d5627,
+		58340f,
+		99ffff,
+		73dfff,
+		4ea5f9,
+		2a63e4,
+		0a00b8,
+		ebf1b5,
+		d4db9d,
+		bbc187,
+		a6a462,
+		8b8239,
+		73ff6b,
+		52da3b,
+		3cb420,
+		289315,
+		1a7309,
+	}
+}
+text {
+	object {
+		x=10
+		y=40
+		width=60
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Status"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=75
+		y=40
+		width=215
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XSLSTATUS:READ"
+		clr=14
+		bclr=2
+	}
+	clrmod="alarm"
+	format="string"
+	limits {
+	}
+}
+text {
+	object {
+		x=10
+		y=10
+		width=91
+		height=25
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="X-Axis Encoder"
+}
+text {
+	object {
+		x=300
+		y=15
+		width=70
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Pos"
+	align="horiz. centered"
+}
+"text update" {
+	object {
+		x=300
+		y=40
+		width=70
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XENCPOSITION:READ"
+		clr=14
+		bclr=2
+	}
+	limits {
+		precSrc="default"
+		precDefault=3
+	}
+}
+text {
+	object {
+		x=15
+		y=100
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Ratio"
+	align="horiz. right"
+}
+text {
+	object {
+		x=15
+		y=125
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="MaxAttemp"
+	align="horiz. right"
+}
+text {
+	object {
+		x=15
+		y=150
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="ErrRange"
+	align="horiz. right"
+}
+text {
+	object {
+		x=15
+		y=175
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Tolerance"
+	align="horiz. right"
+}
+"text update" {
+	object {
+		x=125
+		y=175
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XSLT:READ"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=125
+		y=150
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XSLE:READ"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=125
+		y=125
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XSLA:READ"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=125
+		y=100
+		width=90
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XSLR:READ"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=100
+		width=90
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XSLR:SET"
+		clr=14
+		bclr=50
+	}
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=125
+		width=90
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XSLA:SET"
+		clr=14
+		bclr=50
+	}
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=150
+		width=90
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XSLE:SET"
+		clr=14
+		bclr=50
+	}
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=235
+		y=175
+		width=90
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XSLT:SET"
+		clr=14
+		bclr=50
+	}
+	limits {
+	}
+}
+rectangle {
+	object {
+		x=10
+		y=70
+		width=320
+		height=130
+	}
+	"basic attribute" {
+		clr=0
+		fill="outline"
+	}
+}
+text {
+	object {
+		x=125
+		y=75
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Read"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=235
+		y=75
+		width=90
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Set"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=375
+		y=15
+		width=70
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="Delta"
+	align="horiz. centered"
+}
+"text update" {
+	object {
+		x=375
+		y=40
+		width=70
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XDX:READ"
+		clr=14
+		bclr=2
+	}
+	limits {
+		precSrc="default"
+		precDefault=3
+	}
+}
+rectangle {
+	object {
+		x=5
+		y=5
+		width=445
+		height=200
+	}
+	"basic attribute" {
+		clr=0
+		fill="outline"
+	}
+}
+composite {
+	object {
+		x=345
+		y=100
+		width=95
+		height=50
+	}
+	"composite name"=""
+	children {
+		text {
+			object {
+				x=345
+				y=100
+				width=60
+				height=20
+			}
+			"basic attribute" {
+				clr=30
+			}
+			textix="SWITCH"
+		}
+		text {
+			object {
+				x=410
+				y=100
+				width=20
+				height=20
+			}
+			"basic attribute" {
+				clr=15
+			}
+			"dynamic attribute" {
+				vis="if not zero"
+				calc="A"
+				chan="$(P)$(R)XSLSWITCH:READ"
+			}
+			textix="ON"
+		}
+		text {
+			object {
+				x=410
+				y=100
+				width=30
+				height=20
+			}
+			"basic attribute" {
+				clr=20
+			}
+			"dynamic attribute" {
+				vis="if zero"
+				calc="A"
+				chan="$(P)$(R)XSLSWITCH:READ"
+			}
+			textix="OFF"
+			align="horiz. centered"
+		}
+		"choice button" {
+			object {
+				x=345
+				y=125
+				width=95
+				height=25
+			}
+			control {
+				chan="$(P)$(R)XSLSWITCH:SET"
+				clr=14
+				bclr=3
+			}
+			clrmod="discrete"
+			stacking="column"
+		}
+	}
+}
+"message button" {
+	object {
+		x=345
+		y=70
+		width=90
+		height=25
+	}
+	control {
+		chan="$(P)$(R)XENCZERO:SET"
+		clr=14
+		bclr=2
+	}
+	label="ENC-ZERO"
+	press_msg="SET"
+	release_msg="0"
+	clrmod="discrete"
+}
