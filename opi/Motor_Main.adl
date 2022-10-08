@@ -162,7 +162,7 @@ text {
 		height=25
 	}
 	control {
-		chan="TEST:MOTOR1:IOC:NAME"
+		chan="ACE-SDE:MOTOR1:IOC:NAME"
 		clr=14
 		bclr=0
 	}
@@ -178,14 +178,14 @@ text {
 		height=25
 	}
 	command[0] {
-		label="Start TEST-MOTOR1"
+		label="Start ACE-SDE-MOTOR1"
 		name=""
-		args="TEST MOTOR1 start"
+		args="ACE-SDE MOTOR1 start"
 	}
 	command[1] {
-		label="Stop TEST-MOTOR1"
-		name="/home/wl227/ResearchWork/medm/Scripts/arcusMotor"
-		args="TEST MOTOR1 stop"
+		label="Stop ACE-SDE-MOTOR1"
+		name=""
+		args="ACE-SDE MOTOR1 stop"
 	}
 	clr=14
 	bclr=4
@@ -245,14 +245,14 @@ text {
 		height=25
 	}
 	command[0] {
-		label="Start TEST-MOTOR2"
-		name="/home/wl/home/wl227/ResearchWork/medm/Scripts/arcusMotor227/ResearchWork/medm/Scripts/arcusMotor"
-		args="TEST MOTOR2 start"
+		label="Start ACE-SDE-MOTOR2"
+		name=""
+		args="ACE-SDE MOTOR2 start"
 	}
 	command[1] {
-		label="Stop TEST-MOTOR2"
-		name="/home/wl227/ResearchWork/medm/Scripts/arcusMotor"
-		args="TEST MOTOR2 stop"
+		label="Stop ACE-SDE-MOTOR2"
+		name=""
+		args="ACE-SDE MOTOR2 stop"
 	}
 	clr=14
 	bclr=4
@@ -330,14 +330,14 @@ text {
 		height=25
 	}
 	command[0] {
-		label="Start TEST-MOTOR1"
-		name="/home/wl/home/wl227/ResearchWork/medm/Scripts/arcusMotor227/ResearchWork/medm/Scripts/arcusMotor"
-		args="TEST MOTOR1 start"
+		label="Start PMX-2ED-SA-MOTOR1"
+		name=""
+		args="PMX-2ED-SA MOTOR1 start"
 	}
 	command[1] {
-		label="Stop TEST-MOTOR1"
-		name="/home/wl227/ResearchWork/medm/Scripts/arcusMotor"
-		args="TEST MOTOR1 stop"
+		label="Stop PMX-2ED-SA-MOTOR1"
+		name=""
+		args="PMX-2ED-SA MOTOR1 stop"
 	}
 	clr=14
 	bclr=4
