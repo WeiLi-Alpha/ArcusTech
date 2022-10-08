@@ -8,7 +8,7 @@ This is an EPICS IOC for Arcus stepper motor controller and driver:
 - [asyn](https://github.com/epics-modules/asyn)
 - [stream](https://github.com/epics-modules/stream)
 
-# Wiring
+# Reference
 Refer to the manual:
 - [Arcus ACE-SDE Single Axis Controller-Driver Manual Rev 1.24.pdf](https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/Arcus%20ACE-SDE%20Single%20Axis%20Controller-Driver%20Manual%20Rev%201.24.pdf)
 - [PMX-2ED-SA-Manual-Rev-1.18.pdf](https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/PMX-2ED-SA-Manual-Rev-1.18.pdf)
