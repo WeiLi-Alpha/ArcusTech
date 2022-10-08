@@ -1,0 +1,65 @@
+# arcus_SaveRestore.template
+# Template database for saving and resotre a position of a Stepper Motor
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be RNG:IMAGE-MOTOR1
+# pos    - name of this position
+# axis   - axis
+#
+# usage:
+# 1. single-axis controller: (ACE-SDE)
+#-----------------------------------------
+# file db/arcus_SaveRestore_Axis.template {
+#     pattern { pref, pos, axis}
+#         { "$(PrefixName)", "POS1", ""}
+#         { "$(PrefixName)", "POS2", ""}
+#         { "$(PrefixName)", "POS3", ""}
+#         { "$(PrefixName)", "POS4", ""}
+#
+# 2. two/multi-axis controller: (PMX-2ED-SA)
+#-----------------------------------------
+# file db/arcus_SaveRestore_Axis.template {
+#     pattern { pref, pos, axis}
+#         { "$(PrefixName)", "XPOS1", "X"}
+#         { "$(PrefixName)", "XPOS2", "X"}
+#         { "$(PrefixName)", "XPOS3", "X"}
+#         { "$(PrefixName)", "XPOS4", "X"}
+#         { "$(PrefixName)", "YPOS1", "Y"}
+#         { "$(PrefixName)", "YPOS2", "Y"}
+#         { "$(PrefixName)", "YPOS3", "Y"}
+#         { "$(PrefixName)", "YPOS4", "Y"}
+# }
+# 
+################################################################################
+
+record(bo,"$(pref):$(pos):BSET") {
+	field(DESC,"$(pos) save button in Motor Control")
+	field(DTYP,"Soft Channel")
+	field(FLNK,"$(pref):$(pos):ASET")
+	field(ZNAM,"OFF")
+	field(ONAM,"SET")
+}
+record(ao,"$(pref):$(pos):ASET") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):$(pos):ARST PP NMS")
+	field(DOL,"$(pref):$(axis)POSITION:SET PP NMS")
+	field(OMSL,"closed_loop")
+}
+
+record(ao,"$(pref):$(pos):ARST") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):$(axis)POSITION:SET PP NMS")
+	field(PREC,"3")
+}
+
+record(bo,"$(pref):$(pos):BRST") {
+	field(DESC,"$(pos) restore button in Motor Control")
+	field(DTYP,"Soft Channel")
+	field(FLNK,"$(pref):$(pos):ARST")
+	field(ZNAM,"OFF")
+	field(ONAM,"RST")
+}
+

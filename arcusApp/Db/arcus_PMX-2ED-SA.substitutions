@@ -1,0 +1,51 @@
+# arcus_PMX-2ED-SA.substitutions
+# Template database for the Arcus arcus_PMX-2ED-SA two-axis Stepper Motor Controller
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be RNG:IMAGE-MOTOR1
+# dev    - device, PMX-2ED-SA in this case
+# port   - device port
+# proto  - protocol, arcus_PMX-2ED-SA.proto for this controller and driver
+# ppmm   - pulse per mm, calibrated with stage, which varies with stage
+# range  - maximum range of the stage
+#
+################################################################################
+
+file db/arcus_PMX-2ED-SA.template.basic {
+   pattern { pref, dev, ndev, port, protocol}
+       {  "$(PrefixName)", "PMX-2ED-SA", "00",  "MOTOR1", "arcus_PMX-2ED-SA.proto"}
+ }
+
+file db/arcus_PMX-2ED-SA.template.Axis {
+   pattern { pref, dev, ndev, axis, port, protocol, ppmm, range}
+       { "$(PrefixName)", "PMX-2ED-SA", "00", "X", "MOTOR1", "arcus_PMX-2ED-SA.proto", "40", "200"}
+       { "$(PrefixName)", "PMX-2ED-SA", "00", "Y", "MOTOR1", "arcus_PMX-2ED-SA.proto", "40", "200"}
+ }
+
+
+file db/arcus_SaveRestore_Axis.template {
+    pattern { pref, pos, axis}
+        { "$(PrefixName)", "POS1", ""}
+        { "$(PrefixName)", "POS2", ""}
+        { "$(PrefixName)", "POS3", ""}
+        { "$(PrefixName)", "POS4", ""}
+        { "$(PrefixName)", "XPOS1", "X"}
+        { "$(PrefixName)", "XPOS2", "X"}
+        { "$(PrefixName)", "XPOS3", "X"}
+        { "$(PrefixName)", "XPOS4", "X"}
+        { "$(PrefixName)", "YPOS1", "Y"}
+        { "$(PrefixName)", "YPOS2", "Y"}
+        { "$(PrefixName)", "YPOS3", "Y"}
+        { "$(PrefixName)", "YPOS4", "Y"}
+}
+
+file db/arcus_SaveRestore_2Axis.template {
+    pattern { pref, pos}
+        { "$(PrefixName)", "XYPOS1"}
+        { "$(PrefixName)", "XYPOS2"}
+        { "$(PrefixName)", "XYPOS3"}
+        { "$(PrefixName)", "XYPOS4"}
+        { "$(PrefixName)", "XYPOS"}
+}
+

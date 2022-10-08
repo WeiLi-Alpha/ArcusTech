@@ -1,0 +1,495 @@
+# arcus_PMX-2ED-SA.template.OneAxis
+# Template database for the Arcus PMX-2ED-SA two-axis Stepper Motor Controller;
+# this template includes the database that can be reused by X/Y axis
+#
+# pref      - prefix of the device, could be PMX-2ED-SA:MOTOR1
+# dev       - device, PMX-2ED-SA in this case
+# ndev      - device number, default is 00 for PMX-2ED-SA, need to be set for each 
+# 	      controller is connected in series using the same USB-RS485 port.
+# axis      - X or Y for axis selections
+# port      - device port
+# protocol  - protocol file, arcus_PMX-2ED-SA.proto for this controller and driver
+# 
+# ppmm      - pulse per mm
+# range     - maximum range of the  stage
+#
+# Usage:
+#	add the following in the substitutions file:
+#---------------------------------------------------
+# file db/arcus_PMX-2ED-SA.template.OneAxis {
+#    pattern { pref, dev, ndev, axis, port, protocol, ppmm, range}
+#        { "PMX-2ED-SA:MOTOR1", "ARCUS PMX-2ED-SA", "00", "X", "MOTOR1", "arcus_PMX-2ED-SA.proto", "40", "200"}
+#        { "PMX-2ED-SA:MOTOR1", "ARCUS PMX-2ED-SA", "00", "Y", "MOTOR1", "arcus_PMX-2ED-SA.proto", "40", "200"}
+#        { "PMX-2ED-SA:MOTOR2", "ARCUS PMX-2ED-SA", "00", "X", "MOTOR2", "arcus_PMX-2ED-SA.proto", "80", "400"}
+#        { "PMX-2ED-SA:MOTOR2", "ARCUS PMX-2ED-SA", "00", "Y", "MOTOR2", "arcus_PMX-2ED-SA.proto", "80", "400"}
+#  }
+#---------------------------------------------------
+#
+# Wei Li 25/09/2022
+#
+################################################################################
+
+
+
+record(bo, "$(pref):$(axis)CLRERR")
+{
+	field(DESC, "$(dev) clear $(axis) errors")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) clearError($(ndev),$(axis)) $(port)")
+}
+
+record(bo, "$(pref):$(axis)STOP"){
+        field(DESC, "$(dev) STOP $(axis)-axes motion")
+        field(DTYP, "stream")
+        field(OUT,  "@$(protocol) stopAxis($(ndev),$(axis)) $(port)")
+}
+
+
+# s-curver acc/dec setting
+record(bi, "$(pref):$(axis)SCVDEC:STATUS")
+{
+	field(DESC, "$(dev) get $(axis) s-curve acc/dec status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getScv($(ndev),$(axis)) $(port)")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+
+record(bo, "$(pref):$(axis)SCVDEC:ENABLE")
+{
+	field(DESC, "$(dev) en/disable $(axis) s-curve acc/dec")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setScv($(ndev),$(axis)) $(port)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+
+record(longin, "$(pref):$(axis)ACC:READ")
+{
+	field(DESC, "$(dev) $(axis) acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getAcc($(ndev),$(axis)) $(port)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+}
+
+record(longout, "$(pref):$(axis)ACC:SET")
+{
+	field(DESC, "$(dev) $(axis) acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setAcc($(ndev),$(axis)) $(port)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(pref):$(axis)DEC:READ")
+{
+	field(DESC, "$(dev) $(axis) deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getDec($(ndev),$(axis)) $(port)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(pref):$(axis)DEC:SET")
+{
+	field(DESC, "$(dev) $(axis) deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setDec($(ndev),$(axis)) $(port)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(pref):$(axis)HS:READ")
+{
+	field(DESC, "$(dev) $(axis) high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getHS($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(pref):$(axis)HS:SET")
+{
+	field(DESC, "$(dev) $(axis) high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setHS($(ndev),$(axis)) $(port)")
+	field(HOPR, "2500")
+	field(LOPR, "0")
+	field(EGU, "pps")
+}
+
+record(longin, "$(pref):$(axis)LS:READ")
+{
+	field(DESC, "$(dev) $(axis) low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getLS($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(pref):$(axis)LS:SET")
+{
+	field(DESC, "$(dev) $(axis) low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setLS($(ndev),$(axis)) $(port)")
+	field(HOPR, "2500")
+	field(LOPR, "0")
+	field(EGU, "pps")
+}
+
+#### Home to limits
+record(bo, "$(pref):$(axis)LIMNEG"){
+        field(DESC, "Home $(dev) to $(axis) limit-")
+        field(DTYP, "stream")
+        field(OUT,  "@$(protocol) homeLimitNeg($(ndev),$(axis)) $(port)")
+}
+
+record(bo, "$(pref):$(axis)LIMPOS"){
+        field(DESC, "Home $(dev) to $(axis) limit+")
+        field(DTYP, "stream")
+        field(OUT,  "@$(protocol) homeLimitPos($(ndev),$(axis)) $(port)")
+}
+
+record(longin, "$(pref):$(axis)LCA:READ")
+{
+	field(DESC, "$(dev) $(axis) limit correction amount")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getLCA($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+	field(EGU,  "Pulses")
+}
+record(longout, "$(pref):$(axis)LCA:SET")
+{
+	field(DESC, "$(dev) $(axis) limit correction amount")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setLCA($(ndev),$(axis)) $(port)")
+	field(FLNK, "$(pref):$(axis)LCA:READ")
+	field(EGU,  "Pulses")
+}
+
+
+
+# status
+record(ai, "$(pref):$(axis)STATUS:AI")
+{
+	field(DESC, "$(dev) status $(axis) raw")
+	field(INP,  "@$(protocol) getStatus($(ndev),$(axis)) $(port)")
+	field(DTYP, "stream")
+	field(SCAN, ".5 second")
+	field(PINI, "YES")
+	field(FLNK, "$(pref):$(axis)STATUS:CALC")
+}
+record(calcout, "$(pref):$(axis)STATUS:CALC")
+{
+	field(DESC, "$(dev) status")
+	field(OUT,  "$(pref):$(axis)STATUS PP")
+	field(CALC, "(FLOOR(LOG(A)/LOG(B)))<0?0:FLOOR(LOG(A+1)/LOG(B))")
+	field(INPA, "$(pref):$(axis)STATUS:AI NPP NMS")
+	field(INPB, "2")
+	field(SCAN, "Passive")
+	field(FLNK, "$(pref):$(axis)STATUS")
+}
+
+record(mbbi, "$(pref):$(axis)STATUS")
+{
+	field(DESC, "$(dev) status $(axis) mbbi")
+	field(INP,  "$(pref):$(axis)STATUS:CALC NPP NMS")
+
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+
+	field(ZRST, "IDEL")
+	field(ONST, "Acc/Dec.")
+	field(TWST, "Const. speed")
+	field(THST, "Not Used")
+	field(FRST, "LIMIT+")
+	field(FVST, "LIMIT-")
+	field(SXST, "HOME")
+	field(SVST, "Limit+ error")
+	field(EIST, "Limit- error")
+	field(NIST, "Z-index status")
+	field(TEST, "Joystick ON")
+	field(ELST, "TOC time-out status")
+}
+
+record(bo, "$(pref):$(axis)POSZERO")
+{
+	field(DESC, "$(dev) Set $(axis) Position value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setPositionZero($(ndev),$(axis)) $(port)")
+}
+record(longin, "$(pref):$(axis)PPMM")
+{
+	field(DESC, "$(dev) $(axis) Pulses per mm")
+	field(INP,  "$(ppmm)")
+	field(SCAN, "Passive")
+}
+record(longout, "$(pref):$(axis)PPMM:SET")
+{
+	field(DESC, "$(dev) $(axis) Pulses per mm")
+	field(OUT,  "$(pref):$(axis)PPMM PP")
+	field(SCAN, "Passive")
+}
+
+record(longin, "$(pref):$(axis)STEP:READ")
+{
+	field(DESC, "$(dev) $(axis) steps readback, step")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getPosition($(ndev),$(axis)) $(port)")
+	field(EGU,  "step")
+}
+
+record(calc, "$(pref):$(axis)POSITION:READ")
+{
+	field(DESC,"$(dev) $(axis)-aisx pos-RB-calcout")
+	field(SCAN, ".5 second")
+	field(CALC,"A/B")
+	field(INPA,"$(pref):$(axis)STEP:READ PP NMS")
+	field(INPB,"$(pref):$(axis)PPMM NPP NMS")
+	field(EGU,  "mm")
+	field(PREC,"3")
+}
+
+record(ao, "$(pref):$(axis)POSITION:SET")
+{
+	field(DESC,"Set $(axis)-aisx pos for $(dev)")
+	field(FLNK,"$(pref):$(axis)POSITION:SET:CALCOUT")
+	field(LOPR,"0")
+	field(HOPR,"$(range)")
+	field(EGU, "mm")
+	field(PREC,"3")
+}
+
+record(calcout, "$(pref):$(axis)POSITION:SET:CALCOUT")
+{
+	field(DESC,"$(dev) $(axis)-aisx pos-sp calcout")
+	field(OUT, "$(pref):$(axis)STEP:SET PP NMS")
+	field(SCAN,"Passive")
+	field(CALC,"A*B")
+	field(INPA,"$(pref):$(axis)POSITION:SET NPP NMS")
+	field(INPB,"$(pref):$(axis)PPMM") 
+}
+
+record(longout, "$(pref):$(axis)STEP:SET")
+{
+	field(DESC,"$(dev) $(axis) pos-sp [step]")
+        field(DTYP, "stream")
+	field(SCAN,"Passive")
+	field(OUT, "@$(protocol) moveToPosition($(ndev),$(axis)) $(port)")
+	field(EGU, "step")
+}
+
+record(longin, "$(pref):$(axis)PS:READ")
+{
+	field(DESC,"$(dev) $(axis)-aisx pulse-speed [pps]")
+        field(DTYP, "stream")
+	field(SCAN,"1 second")
+	field(INP, "@$(protocol) getPS($(ndev),$(axis)) $(port)")
+	field(EGU, "pps")
+}
+
+##################################
+## encoder related
+record(longin, "$(pref):$(axis)ENCSTEP:READ")
+{
+	field(DESC, "$(dev) $(axis) ENC Pos-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getEncoderValue($(ndev),$(axis)) $(port)")
+	field(EGU,  "step")
+}
+
+record(calc, "$(pref):$(axis)ENCPOSITION:READ")
+{
+	field(DESC,"$(dev) $(axis)-aisx ENC Pos-RB calcout")
+	field(SCAN,".5 second")
+	field(CALC,"A/B")
+	field(INPA,"$(pref):$(axis)ENCSTEP:READ PP NMS")
+	field(INPB,"$(pref):$(axis)PPMM NPP NMS")
+	field(EGU,  "mm")
+	field(PREC,"3")
+}
+
+
+record(longout, "$(pref):$(axis)ENCZERO:SET")
+{
+	field(DESC, "$(dev) set $(axis)-Enc-RB Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setEncoderZero($(ndev),$(axis)) $(port)")
+}
+
+record(bi, "$(pref):$(axis)SLSWITCH:READ")
+{
+	field(DESC, "$(dev) get $(axis) ENC Switch status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLEnable($(ndev),$(axis)) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(SCAN, "2 second")
+}
+
+record(bo, "$(pref):$(axis)SLSWITCH:SET")
+{
+	field(DESC, "$(dev) set $(axis) ENC Switch status")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setSLEnable($(ndev),$(axis)) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):$(axis)SLA:READ")
+{
+	field(DESC, "$(dev) $(axis) SNL max attemp RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLA($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+
+record(longout, "$(pref):$(axis)SLA:SET")
+{
+	field(DESC, "$(dev) $(axis) SNL max attemp SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setSLA($(ndev),$(axis)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):$(axis)SLE:READ")
+{
+	field(DESC, "$(dev) $(axis) SNL Err-Range RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLE($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+record(longout, "$(pref):$(axis)SLE:SET")
+{
+	field(DESC, "$(dev) $(axis) SNL Err-Range SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setSLE($(ndev),$(axis)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+}
+
+record(ai, "$(pref):$(axis)SLR:READ")
+{
+	field(DESC, "$(dev) $(axis) SNL Ratio-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLR($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+	field(PREC,"3")
+}
+record(ao, "$(pref):$(axis)SLR:SET")
+{
+	field(DESC, "$(dev) $(axis) SNL Ratio-SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setSLR($(ndev),$(axis)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+	field(PREC,"3")
+}
+
+record(longin, "$(pref):$(axis)SLT:READ")
+{
+	field(DESC, "$(dev) $(axis) SNL Tol-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLT($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+record(longout, "$(pref):$(axis)SLT:SET")
+{
+	field(DESC, "$(dev) $(axis) SNL Tol-SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setSLT($(ndev),$(axis)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+}
+
+record(ai, "$(pref):$(axis)SLSTATUS:READ:AI")
+{
+	field(DESC, "$(dev) $(axis) SNL status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLS($(ndev),$(axis)) $(port)")
+	field(SCAN, ".1 second")
+}
+
+record(mbbi, "$(pref):$(axis)SLSTATUS:READ")
+{
+	field(DESC, "$(dev) $(axis) SNL status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getSLS($(ndev),$(axis)) $(port)")
+	field(SCAN, ".1 second")
+
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+	field(TVVL, "12")
+	field(TTVL, "13")
+
+	field(ZRST, "IDEL")
+	field(ONST, "Moving")
+	field(TWST, "Correcting")
+	field(THST, "Stopping")
+	field(FRST, "Aborting")
+	field(FVST, "Jogging")
+	field(SXST, "Homing")
+	field(SVST, "Z-Homing")
+	field(EIST, "Corr. Range Err.")
+	field(NIST, "Corr. Attemp Err.")
+	field(TEST, "Stall Err.")
+	field(ELST, "Limit Err.")
+	field(TVST, "N/A, SNL disabled")
+	field(TTST, "Limit homing")
+}
+
+record(longin, "$(pref):$(axis)DX:READ")
+{
+	field(DESC, "$(dev) $(axis) SNL Delta-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getDX($(ndev),$(axis)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+
+
+########################
+# Jog
+
+record(stringin, "$(pref):$(axis)JOGNEG")
+{
+	field(DESC, "$(dev) $(axis) JOG-NEG")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) setJogNeg($(ndev),$(axis)) $(port)")
+}
+
+record(stringin, "$(pref):$(axis)JOGPOS")
+{
+	field(DESC, "$(dev) $(axis) JOG-POS")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) setJogPos($(ndev),$(axis)) $(port)")
+}
+
+
+

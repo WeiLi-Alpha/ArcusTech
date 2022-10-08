@@ -1,0 +1,79 @@
+# arcus_SaveRestore_2Axis.template
+# Template database for saving and resotre a position of a 2-axis Stepper Motor
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be RNG:IMAGE-MOTOR1
+# pos    - name of this position
+#
+# usage:
+# two/multi-axis controller: (PMX-2ED-SA)
+#-----------------------------------------
+# file db/arcus_SaveRestore_2Axis.template {
+#     pattern { pref, pos}
+#         { "$(PrefixName)", "XYPOS1"}
+#         { "$(PrefixName)", "XYPOS2"}
+#         { "$(PrefixName)", "XYPOS3"}
+#         { "$(PrefixName)", "XYPOS4"}
+# }
+# 
+################################################################################
+
+record(bo,"$(pref):$(pos):BSET") {
+	field(DESC,"$(pos) save button in Motor Control")
+	field(DTYP,"Soft Channel")
+	field(FLNK,"$(pref):$(pos):BSET:FOUT PP NMS")
+	field(ZNAM,"OFF")
+	field(ONAM,"SET")
+}
+
+record(fanout, "$(pref):$(pos):BSET:FOUT"){
+	field(DESC, "$(pos) Triger XASET&YASET ")
+	field(LNK1, "$(pref):$(pos):XASET PP NMS")
+	field(LNK2, "$(pref):$(pos):YASET PP NMS")
+	field(SELM, "All")
+}
+
+record(ao,"$(pref):$(pos):XASET") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):$(pos):XARST PP NMS")
+	field(DOL,"$(pref):XPOSITION:SET PP NMS")
+	field(OMSL,"closed_loop")
+}
+
+record(ao,"$(pref):$(pos):YASET") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):$(pos):YARST PP NMS")
+	field(DOL,"$(pref):YPOSITION:SET PP NMS")
+	field(OMSL,"closed_loop")
+}
+
+record(ao,"$(pref):$(pos):XARST") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):XPOSITION:SET PP NMS")
+	field(PREC,"3")
+}
+record(ao,"$(pref):$(pos):YARST") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):YPOSITION:SET PP NMS")
+	field(PREC,"3")
+}
+
+record(bo,"$(pref):$(pos):BRST") {
+	field(DESC,"$(pos) restore button in Motor Control")
+	field(DTYP,"Soft Channel")
+	field(FLNK,"$(pref):$(pos):ARST:FOUT PP NMS")
+	field(ZNAM,"OFF")
+	field(ONAM,"RST")
+}
+
+record(fanout, "$(pref):$(pos):ARST:FOUT"){
+	field(DESC, "$(pos) Triger XARST&YARST ")
+	field(LNK1, "$(pref):$(pos):XARST PP NMS")
+	field(LNK2, "$(pref):$(pos):YARST PP NMS")
+	field(SELM, "All")
+}

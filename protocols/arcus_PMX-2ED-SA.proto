@@ -1,0 +1,332 @@
+# arcus_PMX-2ED-SA.proto
+# Proto file for the Arcus PMX-2ED-SA two-axis Stepper Motor Controller-Driver
+# Wei Li 01/10/2022
+#
+################################################################################
+# ReadTimeout = 100;
+# WriteTimeout = 100;
+# PollPeriod = 100;
+# ReplyTimeout = 1000;
+# LockTimeout = 5000;
+# ExtraInput = Ignore;
+Terminator = CR;
+
+debug
+{  out "%s";
+   in "%s";
+}
+
+getID
+{
+	out "@\$1ID";
+	in "%s";
+}
+
+getFMVer
+{
+	out "@\$1VER";
+	in "%s";
+}
+
+store
+{
+	out "@\$1STORE";
+	in "OK";
+}
+
+getStatus
+{
+	out "@\$1MST\$2";
+	in "%i";
+}
+
+getMode
+{
+	out "@\$1MM";
+	in "%i";
+}
+
+setMode
+{
+	out "@\$1%{ABS|INC}";
+	in "OK";
+	@init
+	{getMode;}
+}
+
+getAxisStatus
+{
+	out "@\$1EO\$2";
+	in "%{0|1}";
+}
+
+setAxisStatus
+{
+	out "@\$1EO\$2=%{0|1}";
+	in "OK";
+	@init
+	{getAxisStatus;}
+}
+
+
+# acceleration and speed
+getEnableDec
+{
+	out "@\$1EDEC";
+	in "%{0|1}";
+}
+setEnableDec
+{
+	out "@\$1EDEC=%{0|1}";
+	in "OK";
+}
+getScv
+{
+	out "@\$1SCV\$2";
+	in "%{0|1}";
+}
+setScv
+{
+	out "@\$1SCV\$2=%{0|1}";
+	in "OK";
+}
+
+
+getAcc
+{
+	out "@\$1ACC\$2";
+	in "%i";
+}
+
+setAcc
+{
+	out "@\$1ACC\$2=%i";
+	in "OK";
+	@init
+	{ getAcc; }
+}
+
+getDec
+{
+	out "@\$1DEC\$2";
+	in "%i";
+}
+
+setDec
+{
+	out "@\$1DEC\$2=%i";
+	in "OK";
+	@init
+	{ getDec; }
+}
+
+##############
+getPS
+{
+	out "@\$1PS\$2";
+	in "%i";
+}
+
+clearError
+{
+	out "@\$1CLR\$2";
+	in "OK";
+}
+
+stopAll
+{
+	out "@\$1STOP";
+	in "OK";
+}
+
+stopAxis
+{
+	out "@\$1STOP\$2";
+	in "OK";
+}
+
+
+getEOBootStatus
+{
+	out "@\$1EOBOOT";
+	in "%{0|1}";
+}
+
+setEOBootStatus
+{
+	out "@\$1EOBOOT=%i";
+	in "OK";
+	@init
+	{ getEOBootStatus; }
+}
+
+getHS
+{
+	out "@\$1HSPD\$2";
+	in "%i";
+}
+setHS
+{
+	out "@\$1HSPD\$2=%i";
+	in "OK";
+	@init
+	{getHS;}
+}
+getLS
+{
+	out "@\$1LSPD\$2";
+	in "%i";
+}
+setLS
+{
+	out "@\$1LSPD\$2=%i";
+	in "OK";
+	@init
+	{getLS;}
+}
+
+homeLimitNeg
+{
+	out "@\$1L\$2\x2D";
+	in "OK";
+}
+homeLimitPos
+{
+	out "@\$1L\$2\x2B";
+	in "OK";
+}
+
+getLCA
+{
+	out "@\$1LCA\$2";
+	in "%i";
+}
+setLCA
+{
+	out "@\$1LCA\$2=%i";
+	in "OK";
+	@init
+	{getLCA;}
+}
+
+
+setPositionZero
+{
+	out "@\$1P\$2=0";
+	in "OK";
+}
+
+getPosition
+{
+	out "@\$1P\$2";
+	in "%i";
+}
+
+setPosition
+{
+	out "@\$1P\$2=%i";
+	in "OK";
+	@init
+	{ getPosition; }
+}
+
+moveToPosition
+{
+	out "@\$1\$2%i";
+	in "OK";
+}
+
+#############
+setJogPos
+{
+	out "@\$1J\$2\x2B";
+	in "%s";
+}
+
+setJogNeg
+{
+	out "@\$1J\$2\x2D";
+	in "%s";
+}
+
+
+# StepNloop related, i.e. with encoder
+#### encoder related
+
+getDX  # return StepNLoop delta value of axis
+{
+	out "@\$1DX\$2";
+	in "%i";
+}
+
+getSLEnable
+{
+	out "@\$1SL\$2";
+	in "%{0|1}";
+}
+setSLEnable
+{
+	out "@\$1SL\$2=%{0|1}";
+	in "OK";
+}
+getSLT
+{
+	out "@\$1SLT\$2";
+	in "%i";
+}
+setSLT
+{
+	out "@\$1SLT\$2=%i";
+	in "OK";
+}
+getSLR
+{
+	out "@\$1SLR\$2";
+	in "%f";
+}
+setSLR
+{
+	out "@\$1SLR\$2=%f";
+	in "OK";
+}
+getSLE
+{
+	out "@\$1SLE\$2";
+	in "%i";
+}
+setSLE
+{
+	out "@\$1SLE\$2=%i";
+	in "OK";
+}
+getSLA
+{
+	out "@\$1SLA\$2";
+	in "%i";
+}
+setSLA
+{
+	out "@\$1SLA\$2=%i";
+	in "OK";
+}
+getSLS
+{
+	out "@\$1SLS\$2";
+	in "%i";
+}
+
+getEncoderValue
+{
+	out "@\$1E\$2";
+	in "%i";
+}
+setEncoderValue
+{
+	out "@\$1E\$2=%i";
+	in "OK";
+}
+setEncoderZero
+{
+	out "@\$1E\$2=0";
+	in "OK";
+}

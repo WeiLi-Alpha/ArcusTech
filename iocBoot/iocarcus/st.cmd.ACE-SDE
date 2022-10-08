@@ -1,0 +1,30 @@
+#!../../bin/linux-x86_64/arcus
+
+## You may have to change arcus to something else
+## everywhere it appears in this file
+
+< envPaths
+epicsEnvSet("STREAM_PROTOCOL_PATH","${TOP}/protocols")
+
+cd "${TOP}"
+
+## Register all support components
+dbLoadDatabase("dbd/arcus.dbd",0,0)
+arcus_registerRecordDeviceDriver(pdbbase) 
+
+## Load record instances
+#dbLoadTemplate "db/template.substitutions"
+#dbLoadRecords("db/arcus_ACE-SDE.substitutions","PrefixName=ACE-SDE:MOTOR1")
+dbLoadTemplate("db/arcus_ACE-SDE.substitutions","PrefixName=ACE-SDE:MOTOR1")
+
+drvAsynSerialPortConfigure("MOTOR1","/dev/ttyUSB0")
+asynSetOption("MOTOR1",0,"baud","9600")
+asynSetOption("MOTOR1",0,"bits","8")
+asynSetOption("MOTOR1",0,"parity","none")
+asynSetOption("MOTOR1",0,"stop","1")
+asynSetOption("MOTOR1",0,"clocal","Y")
+asynSetOption("MOTOR1",0,"crtscts","N")
+
+cd "${TOP}/iocBoot/${IOC}"
+iocInit()
+#startPVAServer

@@ -1,0 +1,905 @@
+# arcus.template
+# Template database for the Arcus PMX-4ET-SA Stepper Motor Controller
+# Mehmet Bozdogan 14/11/2017
+#
+# substitutions:
+# sys    - system
+# sec    - section
+# dev    - device
+# $(sys)-$(sec)-$(dev) - device port
+#
+#
+################################################################################
+record(stringout, "$(sys)-$(sec)-$(dev):DEBUG")
+{
+	field(DESC, "$(dev) debug")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto debug $(sys)-$(sec)-$(dev)")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):STORE")
+{
+	field(DESC, "$(dev) get status")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto store $(sys)-$(sec)-$(dev)")
+}
+
+record(bi, "$(sys)-$(sec)-$(dev):STATUS")
+{
+	field(DESC, "$(dev) get status")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getStatus($(sys)-$(sec)-$(dev)) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+}
+
+record(mbbi, "$(sys)-$(sec)-$(dev):MSX")
+{
+	field(DESC, "$(dev) X axis Status")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+
+	field(ZRST, "Motor in acceleration")
+	field(ONST, "Motor in deceleration")
+	field(TWST, "M. running at cont. speed")
+	field(THST, "Alarm input status")
+	field(FRST, "Plus limit input sw. st.")
+	field(FVST, "Minus limit input sw. st.")
+	field(SXST, "Home input switch status")
+	field(SVST, "Plus limit error")
+	field(EIST, "Minus limit error")
+	field(NIST, "Alarm error")
+	field(TEST, "Reserved")
+	field(ELST, "TOC time-out status")
+}
+record(mbbi, "$(sys)-$(sec)-$(dev):MSY")
+{
+	field(DESC, "$(dev) Y axis Status")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+
+	field(ZRST, "Motor in acceleration")
+	field(ONST, "Motor in deceleration")
+	field(TWST, "M. running at cont. speed")
+	field(THST, "Alarm input status")
+	field(FRST, "Plus limit input sw. st.")
+	field(FVST, "Minus limit input sw. st.")
+	field(SXST, "Home input switch status")
+	field(SVST, "Plus limit error")
+	field(EIST, "Minus limit error")
+	field(NIST, "Alarm error")
+	field(TEST, "Reserved")
+	field(ELST, "TOC time-out status")
+}
+record(mbbi, "$(sys)-$(sec)-$(dev):MSZ")
+{
+	field(DESC, "$(dev) Z axis Status")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+
+	field(ZRST, "Motor in acceleration")
+	field(ONST, "Motor in deceleration")
+	field(TWST, "M. running at cont. speed")
+	field(THST, "Alarm input status")
+	field(FRST, "Plus limit input sw. st.")
+	field(FVST, "Minus limit input sw. st.")
+	field(SXST, "Home input switch status")
+	field(SVST, "Plus limit error")
+	field(EIST, "Minus limit error")
+	field(NIST, "Alarm error")
+	field(TEST, "Reserved")
+	field(ELST, "TOC time-out status")
+}
+record(mbbi, "$(sys)-$(sec)-$(dev):MSU")
+{
+	field(DESC, "$(dev) U axis Status")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+
+	field(ZRST, "Motor in acceleration")
+	field(ONST, "Motor in deceleration")
+	field(TWST, "M. running at cont. speed")
+	field(THST, "Alarm input status")
+	field(FRST, "Plus limit input sw. st.")
+	field(FVST, "Minus limit input sw. st.")
+	field(SXST, "Home input switch status")
+	field(SVST, "Plus limit error")
+	field(EIST, "Minus limit error")
+	field(NIST, "Alarm error")
+	field(TEST, "Reserved")
+	field(ELST, "TOC time-out status")
+}
+record(bi, "$(sys)-$(sec)-$(dev):BUFFERSTATUS")
+{
+	field(DESC, "$(dev) get buffer status")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+record(longin, "$(sys)-$(sec)-$(dev):BUFFERSTART")
+{
+	field(DESC, "$(dev) get buffer start")
+}
+record(longin, "$(sys)-$(sec)-$(dev):BUFFEREND")
+{
+	field(DESC, "$(dev) get buffer end")
+}
+record(longin, "$(sys)-$(sec)-$(dev):BUFFERAVA")
+{
+	field(DESC, "$(dev) get available buffer")
+}
+record(bi, "$(sys)-$(sec)-$(dev):MODE-RB")
+{
+	field(DESC, "$(dev) get available buffer")
+	field(ZNAM, "Absolute")
+	field(ONAM, "Incremental")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):MODE-SP")
+{
+	field(DESC, "$(dev) motion mode")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setMode $(sys)-$(sec)-$(dev)")
+	field(ZNAM, "Absolute")
+	field(ONAM, "Incremental")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):ACC-RB")
+{
+	field(DESC, "$(dev) global acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAcc $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+
+#record(calcout, "$(sys)-$(sec)-$(dev):ACC-MAX")
+#{
+#	field(INPA, "10")
+#	field(INPB, "10")
+#	field(CALC, "")
+#	field(OUT,  "$(sys)-$(sec)-$(dev):ACC-SP.DRVH")
+#	field(EGU, "ms")
+#}
+
+record(longout, "$(sys)-$(sec)-$(dev):ACC-SP")
+{
+	field(DESC, "$(dev) global acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAcc $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):DEC-RB")
+{
+	field(DESC, "$(dev) global deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDec $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+
+record(longout, "$(sys)-$(sec)-$(dev):DEC-SP")
+{
+	field(DESC, "$(dev) global deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setDec $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):X-ACC-RB")
+{
+	field(DESC, "$(dev) X acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAccAxis(X) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):X-ACC-SP")
+{
+	field(DESC, "$(dev) X acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAccAxis(X) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):Y-ACC-RB")
+{
+	field(DESC, "$(dev) Y acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAccAxis(Y) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):Y-ACC-SP")
+{
+	field(DESC, "$(dev) Y acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAccAxis(Y) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):Z-ACC-RB")
+{
+	field(DESC, "$(dev) Z acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAccAxis(Z) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):Z-ACC-SP")
+{
+	field(DESC, "$(dev) Z acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAccAxis(Z) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):U-ACC-RB")
+{
+	field(DESC, "$(dev) U acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAccAxis(U) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):U-ACC-SP")
+{
+	field(DESC, "$(dev) U acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAccAxis(U) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):X-DEC-RB")
+{
+	field(DESC, "$(dev) X deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDecAxis(X) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):X-DEC-SP")
+{
+	field(DESC, "$(dev) X deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setDecAxis(X) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):Y-DEC-RB")
+{
+	field(DESC, "$(dev) Y deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDecAxis(Y) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):Y-DEC-SP")
+{
+	field(DESC, "$(dev) Y deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setDecAxis(Y) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):Z-DEC-RB")
+{
+	field(DESC, "$(dev) Z deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDecAxis(Z) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):Z-DEC-SP")
+{
+	field(DESC, "$(dev) Z deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setDecAxis(Z) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):U-DEC-RB")
+{
+	field(DESC, "$(dev) U deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDecAxis(U) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):U-DEC-SP")
+{
+	field(DESC, "$(dev) U deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setDecAxis(U) $(sys)-$(sec)-$(dev)")
+	field(EGU, "ms")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):BUFF-MODE")
+{
+	field(DESC, "$(dev) buffered mode")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setBuffMode $(sys)-$(sec)-$(dev)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):DI")
+{
+	field(DESC, "$(dev) digital input status")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDigitalInput $(sys)-$(sec)-$(dev)")
+	field(SCAN, "2 second")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):DO-RB")
+{
+	field(DESC, "$(dev) digital output readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getDigitalOutput $(sys)-$(sec)-$(dev)")
+	field(SCAN, "2 second")
+}
+record(longout, "$(sys)-$(sec)-$(dev):DO-SP")
+{
+	field(DESC, "$(dev) digital output setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setDigitalOutput $(sys)-$(sec)-$(dev)")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):CLRERR")
+{
+	field(DESC, "$(dev) clear errors")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto clearError $(sys)-$(sec)-$(dev)")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):X-STEPNLOOP")
+{
+	field(DESC, "$(dev)-X step N Loop delta Value")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getStepNLoop(X) $(sys)-$(sec)-$(dev)")
+	field(PINI, "YES")
+}
+record(longin, "$(sys)-$(sec)-$(dev):Y-STEPNLOOP")
+{
+	field(DESC, "$(dev)-Y step N Loop delta Value")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getStepNLoop(Y) $(sys)-$(sec)-$(dev)")
+	field(PINI, "YES")
+}
+record(longin, "$(sys)-$(sec)-$(dev):Z-STEPNLOOP")
+{
+	field(DESC, "$(dev)-Z step N Loop delta Value")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getStepNLoop(Z) $(sys)-$(sec)-$(dev)")
+	field(PINI, "YES")
+}
+record(longin, "$(sys)-$(sec)-$(dev):U-STEPNLOOP")
+{
+	field(DESC, "$(dev)-U step N Loop delta Value")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getStepNLoop(U) $(sys)-$(sec)-$(dev)")
+	field(PINI, "YES")
+}
+
+record(bi, "$(sys)-$(sec)-$(dev):XESTATUS")
+{
+	field(DESC, "$(dev) X Axis Enable Status")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisStatus(1) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+record(bi, "$(sys)-$(sec)-$(dev):YESTATUS")
+{
+	field(DESC, "$(dev) Y Axis Enable Status")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisStatus(2) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+record(bi, "$(sys)-$(sec)-$(dev):ZESTATUS")
+{
+	field(DESC, "$(dev) Z Axis Enable Status")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisStatus(3) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+record(bi, "$(sys)-$(sec)-$(dev):UESTATUS")
+{
+	field(DESC, "$(dev) U Axis Enable Status")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisStatus(4) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):XSWITCH")
+{
+	field(DESC, "$(dev) X Axis Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisSwitch(1) $(sys)-$(sec)-$(dev)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+record(bo, "$(sys)-$(sec)-$(dev):YSWITCH")
+{
+	field(DESC, "$(dev) Y Axis Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisSwitch(2) $(sys)-$(sec)-$(dev)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+record(bo, "$(sys)-$(sec)-$(dev):ZSWITCH")
+{
+	field(DESC, "$(dev) Z Axis Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisSwitch(3) $(sys)-$(sec)-$(dev)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+record(bo, "$(sys)-$(sec)-$(dev):USWITCH")
+{
+	field(DESC, "$(dev) U Axis Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisSwitch(4) $(sys)-$(sec)-$(dev)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):OBS-RB")
+{
+	field(DESC, "$(dev) Axiss on boot status readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getOnBootStatus $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+}
+record(longout, "$(sys)-$(sec)-$(dev):OBS-SP")
+{
+	field(DESC, "$(dev) Axiss on boot status setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setOnBootStatus $(sys)-$(sec)-$(dev)")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):XENCSZERO")
+{
+	field(DESC, "$(dev) Set X Encoder value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setEncZero(X) $(sys)-$(sec)-$(dev)")
+}
+record(bo, "$(sys)-$(sec)-$(dev):YENCSZERO")
+{
+	field(DESC, "$(dev) Set Y Encoder value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setEncZero(Y) $(sys)-$(sec)-$(dev)")
+}
+record(bo, "$(sys)-$(sec)-$(dev):ZENCSZERO")
+{
+	field(DESC, "$(dev) Set Z Encoder value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setEncZero(Z) $(sys)-$(sec)-$(dev)")
+}
+record(bo, "$(sys)-$(sec)-$(dev):UENCSZERO")
+{
+	field(DESC, "$(dev) Set U Encoder value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setEncZero(U) $(sys)-$(sec)-$(dev)")
+}
+
+record(bo, "$(sys)-$(sec)-$(dev):XPOSSZERO")
+{
+	field(DESC, "$(dev) Set X Position value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPositionZero(X) $(sys)-$(sec)-$(dev)")
+}
+record(bo, "$(sys)-$(sec)-$(dev):YPOSSZERO")
+{
+	field(DESC, "$(dev) Set Y Position value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPositionZero(Y) $(sys)-$(sec)-$(dev)")
+}
+record(bo, "$(sys)-$(sec)-$(dev):ZPOSSZERO")
+{
+	field(DESC, "$(dev) Set Z Position value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPositionZero(Z) $(sys)-$(sec)-$(dev)")
+}
+record(bo, "$(sys)-$(sec)-$(dev):UPOSSZERO")
+{
+	field(DESC, "$(dev) Set U Position value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPositionZero(U) $(sys)-$(sec)-$(dev)")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):HS-RB")
+{
+	field(DESC, "$(dev) Axiss global high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getGlobalHS $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):HS-SP")
+{
+	field(DESC, "$(dev) Axiss global high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setGlobalHS $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):LS-RB")
+{
+	field(DESC, "$(dev) Axiss global low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getGlobalLS $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):LS-SP")
+{
+	field(DESC, "$(dev) Axiss global low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setGlobalLS $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):XHS-RB")
+{
+	field(DESC, "$(dev) Axis X high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisHS(X) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):XHS-SP")
+{
+	field(DESC, "$(dev) Axis X high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisHS(X) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XLS-RB")
+{
+	field(DESC, "$(dev) Axis X low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisLS(X) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):XLS-SP")
+{
+	field(DESC, "$(dev) Axis X low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisLS(X) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YHS-RB")
+{
+	field(DESC, "$(dev) Axis Y high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisHS(Y) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):YHS-SP")
+{
+	field(DESC, "$(dev) Axis Y high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisHS(Y) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YLS-RB")
+{
+	field(DESC, "$(dev) Axis Y low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisLS(Y) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):YLS-SP")
+{
+	field(DESC, "$(dev) Axis Y low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisLS(Y) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZHS-RB")
+{
+	field(DESC, "$(dev) Axis Z high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisHS(Z) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):ZHS-SP")
+{
+	field(DESC, "$(dev) Axis Z high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisHS(Z) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZLS-RB")
+{
+	field(DESC, "$(dev) Axis Z low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisLS(Z) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):ZLS-SP")
+{
+	field(DESC, "$(dev) Axis Z low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisLS(Z) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UHS-RB")
+{
+	field(DESC, "$(dev) Axis U high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisHS(U) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):UHS-SP")
+{
+	field(DESC, "$(dev) Axis U high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisHS(U) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ULS-RB")
+{
+	field(DESC, "$(dev) Axis U low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getAxisLS(U) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "5 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(sys)-$(sec)-$(dev):ULS-SP")
+{
+	field(DESC, "$(dev) Axis U low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setAxisLS(U) $(sys)-$(sec)-$(dev)")
+	field(DRVH, "6000000")
+	field(DRVL, "0")
+	field(EGU, "pps")
+}
+
+
+record(longin, "$(sys)-$(sec)-$(dev):ENCPOSITION-RB")
+{
+	field(DESC, "$(dev) Axiss Position readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getEncPositions($(sys)-$(sec)-$(dev)) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "1 second")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XENCPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis X ENC Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YENCPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis Y ENC Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZENCPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis Z ENC Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UENCPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis U ENC Position readback")
+}
+
+record(longin, "$(sys)-$(sec)-$(dev):POSITION-RB")
+{
+	field(DESC, "$(dev) Axiss Position readback")
+	field(DTYP, "stream")
+	field(INP,  "@arcus.proto getPositions($(sys)-$(sec)-$(dev)) $(sys)-$(sec)-$(dev)")
+	field(SCAN, "1 second")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis X Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):XPOSITION-SP")
+{
+	field(DESC, "$(dev) Axis X Position setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPosition(X) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis Y Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):YPOSITION-SP")
+{
+	field(DESC, "$(dev) Axis Y Position setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPosition(Y) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis Z Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):ZPOSITION-SP")
+{
+	field(DESC, "$(dev) Axis Z Position setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPosition(Z) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UPOSITION-RB")
+{
+	field(DESC, "$(dev) Axis U Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):UPOSITION-SP")
+{
+	field(DESC, "$(dev) Axis U Position setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto setPosition(U) $(sys)-$(sec)-$(dev)")
+}
+
+
+
+
+record(longout, "$(sys)-$(sec)-$(dev):GO1")
+{
+	field(DESC, "$(dev) Go to programmed 1 position")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto goProgrammed($(sys)-$(sec)-$(dev),1) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XP1-SP")
+{
+	field(DESC, "$(dev) P1 Axis X Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YP1-SP")
+{
+	field(DESC, "$(dev) P1 Axis Y Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZP1-SP")
+{
+	field(DESC, "$(dev) P1 Axis Z Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UP1-SP")
+{
+	field(DESC, "$(dev) P1 Axis U Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):GO2")
+{
+	field(DESC, "$(dev) Go to programmed 2 position")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto goProgrammed($(sys)-$(sec)-$(dev),2) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XP2-SP")
+{
+	field(DESC, "$(dev) P2 Axis X Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YP2-SP")
+{
+	field(DESC, "$(dev) P2 Axis Y Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZP2-SP")
+{
+	field(DESC, "$(dev) P2 Axis Z Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UP2-SP")
+{
+	field(DESC, "$(dev) P2 Axis U Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):GO3")
+{
+	field(DESC, "$(dev) Go to programmed 3 position")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto goProgrammed($(sys)-$(sec)-$(dev),3) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XP3-SP")
+{
+	field(DESC, "$(dev) P3 Axis X Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YP3-SP")
+{
+	field(DESC, "$(dev) P3 Axis Y Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZP3-SP")
+{
+	field(DESC, "$(dev) P3 Axis Z Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UP3-SP")
+{
+	field(DESC, "$(dev) P3 Axis U Position readback")
+}
+record(longout, "$(sys)-$(sec)-$(dev):GO4")
+{
+	field(DESC, "$(dev) Go to programmed 4 position")
+	field(DTYP, "stream")
+	field(OUT,  "@arcus.proto goProgrammed($(sys)-$(sec)-$(dev),4) $(sys)-$(sec)-$(dev)")
+}
+record(longin, "$(sys)-$(sec)-$(dev):XP4-SP")
+{
+	field(DESC, "$(dev) P4 Axis X Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):YP4-SP")
+{
+	field(DESC, "$(dev) P4 Axis Y Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):ZP4-SP")
+{
+	field(DESC, "$(dev) P4 Axis Z Position readback")
+}
+record(longin, "$(sys)-$(sec)-$(dev):UP4-SP")
+{
+	field(DESC, "$(dev) P4 Axis U Position readback")
+}

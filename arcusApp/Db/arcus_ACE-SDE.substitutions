@@ -1,0 +1,26 @@
+# arcus_ACE-SDE.substitutions
+# Template database for the Arcus ACE-SDE single axis Stepper Motor Controller
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be RNG:IMAGE-MOTOR1
+# dev    - device, ACE-SDE in this case
+# port   - device port
+# proto  - protocol, arcus_ACE-SDE.proto for this controller and driver
+# ndev   - device number, if only one device is connected, use 01
+# ppmm   - pulse per mm, calibrated with stage, which varies with stage
+# range  - maximum range of the stage
+#
+################################################################################
+file db/arcus_ACE-SDE.template {
+    pattern { pref, dev, port, proto, ndev, ppmm, range}
+        { "$(PrefixName)", "ARCUS ACE-SDE", "MOTOR1", "arcus_ACE-SDE.proto", "01", "80", "200"}
+}
+
+file db/arcus_SaveRestore.template {
+    pattern { pref, pos}
+        { "$(PrefixName)", "POS1"}
+        { "$(PrefixName)", "POS2"}
+        { "$(PrefixName)", "POS3"}
+        { "$(PrefixName)", "POS4"}
+}

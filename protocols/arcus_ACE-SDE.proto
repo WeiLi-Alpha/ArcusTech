@@ -1,0 +1,303 @@
+# arcus_ACE-SDE.proto
+# Protool file for the Arcus ACE-SDE single axis Stepper Motor Controller-Driver
+# Wei Li 02/10/2022
+#
+################################################################################
+# ReadTimeout = 100;
+# WriteTimeout = 100;
+# PollPeriod = 100;
+# ReplyTimeout = 1000;
+# LockTimeout = 5000;
+# ExtraInput = Ignore;
+Terminator = CR;
+
+debug
+{  out "%s";
+   in "%s";
+}
+
+getID
+{
+	out "@\$1ID";
+	in "%s";
+}
+
+getFMVer
+{
+	out "@\$1VER";
+	in "%s";
+}
+
+store
+{
+	out "@\$1STORE";
+	in "OK";
+}
+
+getStatus
+{
+	out "@\$1MST";
+	in "%i";
+}
+
+getMode
+{
+	out "@\$1MM";
+	in "%i";
+}
+
+setMode
+{
+	out "@\$1%{ABS|INC}";
+	in "OK";
+	@init{
+	getMode;}
+}
+
+getAcc
+{
+	out "@\$1ACC";
+	in "%i";
+}
+
+setAcc
+{
+	out "@\$1ACC=%i";
+	in "OK";
+	@init{getAcc;}
+}
+
+getDec
+{
+	out "@\$1DEC";
+	in "%i";
+}
+
+setDec
+{
+	out "@\$1DEC=%i";
+	in "OK";
+	@init	{ getDec; }
+}
+
+
+clearError
+{
+	out "@\$1CLR";
+	in "OK";
+}
+
+stopMotion
+{
+	out "@\$1STOP";
+	in "OK";
+}
+
+getPower
+{
+	out "@\$1EO";
+	in "%{0|1}";
+}
+
+setPower
+{
+	out "@\$1EO=%{0|1}";
+	in "OK";
+	@init
+	{ getPower; }
+}
+
+
+getOnBootStatus
+{
+	out "@\$1EOBOOT";
+	in "%{0|1}";
+}
+
+setOnBootStatus
+{
+	out "@\$1EOBOOT=%i";
+	in "OK";
+	@init
+	{ getOnBootStatus; }
+}
+
+getHS
+{
+	out "@\$1HSPD";
+	in "%i";
+}
+setHS
+{
+	out "@\$1HSPD=%i";
+	in "OK";
+	@init
+	{getHS;}
+}
+getLS
+{
+	out "@\$1LSPD";
+	in "%i";
+}
+setLS
+{
+	out "@\$1LSPD=%i";
+	in "OK";
+	@init
+	{getLS;}
+}
+
+setPositionZero
+{
+	out "@\$1PX=0";
+	in "OK";
+}
+
+getPosition
+{
+	out "@\$1PX";
+	in "%i";
+}
+
+setPosition
+{
+	out "\$1PX=%i";
+	in "OK";
+	@init
+	{ getPosition; }
+}
+
+moveToPosition
+{
+	out "@\$1X%i";
+	in "OK";
+}
+
+homeLimitPos
+{
+	out "@\$1L\x2B%i";
+	in "OK";
+}
+
+homeLimitNeg
+{
+	out "@\$1L\x2D%i";
+	in "OK";
+}
+
+getLCA
+{
+	out "@\$1LCA";
+	in "%i";
+}
+setLCA
+{
+	out "@\$1LCA=%i";
+	in "OK";
+	@init
+	{getLCA;}
+}
+
+#############
+setJogPos
+{
+	out "@\$1J\x2B";
+	in "OK";
+}
+
+setJogNeg
+{
+	out "@\$1J\x2D";
+	in "OK";
+}
+
+
+#######################################################
+#### encoder related
+getDX  # return StepNLoop delta value of axis
+{
+	out "@\$1DX";
+	in "%i";
+}
+
+getSLEnable
+{
+	out "@\$1SL";
+	in "%{0|1}";
+}
+setSLEnable
+{
+	out "@\$1SL=%{0|1}";
+	in "OK";
+	@init{
+	getSLEnable;}
+}
+getSLT
+{
+	out "@\$1SLT";
+	in "%i";
+}
+setSLT
+{
+	out "@\$1SLT=%i";
+	in "OK";
+	@init{
+	getSLT;}
+}
+getSLR
+{
+	out "@\$1SLR";
+	in "%f";
+}
+setSLR
+{
+	out "@\$1SLR=%f";
+	in "OK";
+	@init{
+	getSLR;}
+}
+getSLE
+{
+	out "@\$1SLE";
+	in "%i";
+}
+setSLE
+{
+	out "@\$1SLE=%i";
+	in "OK";
+	@init{
+	getSLE;}
+}
+getSLA
+{
+	out "@\$1SLA";
+	in "%i";
+}
+setSLA
+{
+	out "@\$1SLA=%i";
+	in "OK";
+	@init{
+	getSLA;}
+}
+getSLS
+{
+	out "@\$1SLS";
+	in "%i";
+}
+
+getEncoderValue
+{
+	out "@\$1EX";
+	in "%i";
+}
+setEncoderValue
+{
+	out "@\$1EX=%i";
+	in "OK";
+}
+setEncoderZero
+{
+	out "@\$1EX=0";
+	in "OK";
+}

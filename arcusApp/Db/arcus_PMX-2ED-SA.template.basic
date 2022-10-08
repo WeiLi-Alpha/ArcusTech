@@ -1,0 +1,186 @@
+# arcus_PMX-2ED-SA.template.basic
+# Template database for the Arcus PMX-2ED-SA two-axis Stepper Motor Controller
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be PMX-2ED-SA:MOTOR1
+# dev    - device, PMX-2ED-SA in this case
+# ndev   - device number, default is 00 for PMX-2ED-SA, need to be set for each 
+# 	   controller if connected in series using an USB-RS485 port.
+# port   - device port of USB
+# protocol  - protocol, arcus_PMX-2ED-SA.proto for this controller and driver
+# 
+# Usage:
+#	add the following in the substitutions file (if two motors are used):
+#---------------------------------------------------
+# file db/arcus_PMX-2ED-SA.template.basic {
+#    pattern { pref, dev, ndev, port, protocol}
+#        { "PMX-2ED-SA:MOTOR1", "ARCUS PMX-2ED-SA", "00", "MOTOR1", "arcus_PMX-2ED-SA.proto"}
+#        { "PMX-2ED-SA:MOTOR2", "ARCUS PMX-2ED-SA", "01", "MOTOR2", "arcus_PMX-2ED-SA.proto"}
+#  }
+#---------------------------------------------------
+################################################################################
+
+################################################################################
+### general setting
+record(stringin, "$(pref):DEBUG")
+{
+	field(DESC, "$(dev) debug")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) debug($(ndev)) $(port)")
+}
+record(stringin, "$(pref):ID")
+{
+	field(DESC, "$(dev) getID")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getID($(ndev)) $(port)")
+	field(PINI, "YES")
+}
+record(stringin, "$(pref):FIRMVER")
+{
+	field(DESC, "$(dev) get firmware version")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getFMVer($(ndev)) $(port)")
+	field(PINI, "YES")
+}
+
+record(bo, "$(pref):STORE")
+{
+	field(DESC, "$(dev) get status")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) store($(ndev)) $(port)")
+}
+
+record(bo, "$(pref):STOP"){
+        field(DESC, "$(dev) STOP all axes motion")
+        field(DTYP, "stream")
+        field(OUT,  "@$(protocol) stopAll($(ndev)) $(port)")
+}
+
+record(bi, "$(pref):MODE:READ")
+{
+	field(DESC, "$(dev) get move mode")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getMode($(ndev)) $(port)")
+	field(ZNAM, "ABS")
+	field(ONAM, "INC")
+	field(SCAN, "1 second")
+}
+
+record(bo, "$(pref):MODE:SET")
+{
+	field(DESC, "$(dev) motion mode")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setMode($(ndev)) $(port)")
+	field(ZNAM, "ABS")
+	field(ONAM, "INC")
+}
+
+
+#############################
+# power switch
+record(bi, "$(pref):UNIDEC:STATUS")
+{
+	field(DESC, "$(dev) unique deceleration status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getEnableDec($(ndev)) $(port)")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+
+record(bo, "$(pref):UNIDEC:ENABLE")
+{
+	field(DESC, "$(dev) enable/disable uniq. dece.")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setEnableDec($(ndev)) $(port)")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+}
+
+record(bi, "$(pref):XPOWER:READ")
+{
+	field(DESC, "$(dev) X-axis Power Status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getAxisStatus($(ndev),1) $(port)")
+	field(SCAN, "2 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+record(bo, "$(pref):XPOWER:SET")
+{
+	field(DESC, "$(dev) X-axis Power Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setAxisStatus($(ndev),1) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(PINI, "YES")
+}
+
+record(bi, "$(pref):YPOWER:READ")
+{
+	field(DESC, "$(dev) Y-axis Power Status")
+	field(DTYP, "stream")
+	field(INP,  "@$(protocol) getAxisStatus($(ndev),2) $(port)")
+	field(SCAN, "2 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+record(bo, "$(pref):YPOWER:SET")
+{
+	field(DESC, "$(dev) Y-axis Power Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@$(protocol) setAxisStatus($(ndev),2) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+}
+
+############################
+## run two axis simultaneously
+record(ai,"$(pref):GOXY:XPOS") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+#	field(INP, "0")
+}
+record(ai,"$(pref):GOXY:YPOS") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+#	field(INP, "0")
+}
+record(fanout, "$(pref):GOXY"){
+	field(DESC, "Triger XARST&YARST ")
+	field(LNK1, "$(pref):GOXY:XSET PP NMS")
+	field(LNK2, "$(pref):GOXY:YSET PP NMS")
+	field(SELM, "All")
+}
+record(ao,"$(pref):GOXY:XSET") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):XPOSITION:SET PP NMS")
+	field(DOL,"$(pref):GOXY:XPOS PP NMS")
+	field(OMSL,"closed_loop")
+}
+record(ao,"$(pref):GOXY:YSET") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):YPOSITION:SET PP NMS")
+	field(DOL,"$(pref):GOXY:YPOS PP NMS")
+	field(OMSL,"closed_loop")
+}
+
+
+## record(bi, "$(pref):EOBOOT:STATUS")
+## {
+## 	field(DESC, "$(dev) get EO status at boot-up")
+## 	field(DTYP, "stream")
+## 	field(OUT,  "@$(protocol) getEOBootStatus $(port)")
+## 	field(ZNAM, "Disable")
+## 	field(ONAM, "Enable")
+## }
+## record(bo, "$(pref):EOBOOT:ENABLE")
+## {
+## 	field(DESC, "$(dev) set EO status at boot-up")
+## 	field(DTYP, "stream")
+## 	field(OUT,  "@$(protocol) setEOBootStatus $(port)")
+## 	field(ZNAM, "Disable")
+## 	field(ONAM, "Enable")
+## }

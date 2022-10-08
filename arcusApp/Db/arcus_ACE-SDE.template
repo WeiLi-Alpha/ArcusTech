@@ -1,0 +1,531 @@
+# arcus_ACE-SDE.template
+# Template database for the Arcus ACE-SDE single axis Stepper Motor Controller
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be RNG:IMAGE-MOTOR1
+# dev    - device, ACE-SDE in this case
+# port   - device port
+# proto  - protocol, arcus_ACE-SDE.proto for this controller and driver
+# ndev   - device number, if only one device is connected, use 01
+# ppmm   - pulse per mm, calibrated with stage, which varies with stage
+# range  - maximum range of the stage
+#
+################################################################################
+
+################################################################################
+### motor setting
+record(stringin, "$(pref):DEBUG")
+{
+	field(DESC, "$(dev) debug")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) debug $(port)")
+}
+
+record(stringin, "$(pref):ID")
+{
+	field(DESC, "$(dev) getID")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getID($(ndev)) $(port)")
+	field(PINI, "YES")
+}
+record(stringin, "$(pref):FIRMVER")
+{
+	field(DESC, "$(dev) getFirmVer")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getFMVer($(ndev)) $(port)")
+	field(PINI, "YES")
+}
+
+record(bo, "$(pref):STORE")
+{
+	field(DESC, "$(dev) get status")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) store($(ndev)) $(port)")
+}
+
+record(bo, "$(pref):CLRERR")
+{
+	field(DESC, "$(dev) clear errors")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) clearError($(ndev)) $(port)")
+}
+
+record(bo, "$(pref):STOP"){
+        field(DESC, "$(dev) STOP motion")
+        field(DTYP, "stream")
+        field(OUT,  "@$(proto) stopMotion($(ndev)) $(port)")
+}
+
+record(bi, "$(pref):MODE:READ")
+{
+	field(DESC, "$(dev) get move mode")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getMode($(ndev)) $(port)")
+	field(ZNAM, "ABS")
+	field(ONAM, "INC")
+	field(SCAN, "1 second")
+}
+
+record(bo, "$(pref):MODE:SET")
+{
+	field(DESC, "$(dev) motion mode")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setMode($(ndev)) $(port)")
+	field(ZNAM, "ABS")
+	field(ONAM, "INC")
+	field(PINI, "YES")
+}
+
+########################
+#### move to limits
+record(bo, "$(pref):LIMNEG"){
+        field(DESC, "Home $(dev) to limit-")
+        field(DTYP, "stream")
+        field(OUT,  "@$(proto) homeLimitNeg($(ndev)) $(port)")
+}
+
+record(bo, "$(pref):LIMPOS"){
+        field(DESC, "Home $(dev) to limit+")
+        field(DTYP, "stream")
+        field(OUT,  "@$(proto) homeLimitPos($(ndev)) $(port)")
+}
+
+record(longin, "$(pref):LCA:READ")
+{
+	field(DESC, "$(dev) limit correction amount")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getLCA($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+	field(EGU,  "Pulses")
+}
+record(longout, "$(pref):LCA:SET")
+{
+	field(DESC, "$(dev) limit correction amount")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setLCA($(ndev)) $(port)")
+	field(FLNK, "$(pref):LCA:READ")
+	field(EGU,  "Pulses")
+}
+
+
+
+##########################
+# power 
+record(bi, "$(pref):POWER:READ")
+{
+	field(DESC, "$(dev) Power Status")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getPower($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(ZNAM, "Disabled")
+	field(ONAM, "Enabled")
+}
+
+record(bo, "$(pref):POWER:SET")
+{
+	field(DESC, "$(dev) Power Switch")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setPower($(ndev)) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(PINI, "YES")
+}
+
+##########################
+# motor status
+
+record(ai, "$(pref):STATUS:AI")
+{
+	field(DESC, "$(dev) status")
+	field(INP,  "@$(proto) getStatus($(ndev)) $(port)")
+	field(DTYP, "stream")
+	field(SCAN, ".1 second")
+	field(PINI, "YES")
+	field(FLNK, "$(pref):STATUS:CALC")
+}
+record(calcout, "$(pref):STATUS:CALC")
+{
+	field(DESC, "$(dev) status")
+	field(OUT,  "$(pref):STATUS PP")
+	field(CALC, "(FLOOR(LOG(A)/LOG(B)))<0?0:FLOOR(LOG(A)/LOG(B))")
+	field(INPA, "$(pref):STATUS:AI NPP NMS")
+	field(INPB, "2")
+	field(SCAN, "Passive")
+	field(FLNK, "$(pref):STATUS")
+}
+
+record(mbbi, "$(pref):STATUS")
+{
+	field(DESC, "$(dev) status")
+	field(INP,  "$(pref):STATUS:CALC NPP NMS")
+	
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+
+	field(ZRST, "IDLE")
+	field(ONST, "Acceleration")
+	field(TWST, "Deceleration")
+	field(THST, "HOME")
+	field(FRST, "LIMIT-")
+	field(FVST, "LIMIT+")
+	field(SXST, "Limit- error")
+	field(SVST, "Limit+ error")
+	field(EIST, "Latch input status")
+	field(NIST, "Z-index status")
+	field(TEST, "TOC time-out status")
+}
+
+
+##########################
+# acceleration, decceleration and speed 
+record(longin, "$(pref):ACC:READ")
+{
+	field(DESC, "$(dev) acceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getAcc($(ndev)) $(port)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+
+record(longout, "$(pref):ACC:SET")
+{
+	field(DESC, "$(dev) acceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setAcc($(ndev)) $(port)")
+	field(EGU, "ms")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):DEC:READ")
+{
+	field(DESC, "$(dev) deceleration readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getDec($(ndev)) $(port)")
+	field(EGU, "ms")
+	field(SCAN, "2 second")
+}
+
+record(longout, "$(pref):DEC:SET")
+{
+	field(DESC, "$(dev) deceleration setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setDec($(ndev)) $(port)")
+	field(EGU, "ms")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):HS:READ")
+{
+	field(DESC, "$(dev) high speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getHS($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(pref):HS:SET")
+{
+	field(DESC, "$(dev) high speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setHS($(ndev)) $(port)")
+	field(HOPR, "2500")
+	field(LOPR, "0")
+	field(EGU, "pps")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):LS:READ")
+{
+	field(DESC, "$(dev) low speed readback")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getLS($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(PINI, "YES")
+	field(EGU, "pps")
+}
+record(longout, "$(pref):LS:SET")
+{
+	field(DESC, "$(dev) low speed setpoint")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setLS($(ndev)) $(port)")
+	field(HOPR, "2500")
+	field(LOPR, "0")
+	field(EGU, "pps")
+	field(PINI, "YES")
+}
+
+##########################
+## read and set position
+record(bo, "$(pref):POSZERO")
+{
+	field(DESC, "$(dev) Set Position value to Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setPositionZero($(ndev)) $(port)")
+}
+
+record(longin, "$(pref):PPMM")
+{
+	field(DESC, "$(dev) Pulses per mm")
+	field(INP,  "$(ppmm)")
+	field(SCAN, "Passive")
+}
+
+record(longout, "$(pref):PPMM:SET")
+{
+	field(DESC, "$(dev) Pulses per mm")
+	field(OUT,  "$(pref):PPMM PP")
+	field(SCAN, "Passive")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):STEP:READ")
+{
+	field(DESC, "$(dev) steps readback, step")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getPosition($(ndev)) $(port)")
+	field(EGU,  "step")
+}
+
+record(calc, "$(pref):POSITION:READ")
+{
+	field(DESC,"$(dev) Position read calc")
+	field(SCAN,".5 second")
+	field(CALC,"A/B")
+	field(INPA,"$(pref):STEP:READ PP NMS")
+	field(INPB,"$(pref):PPMM NPP NMS")
+	field(EGU,  "mm")
+	field(PREC,  "3")
+}
+
+record(ao, "$(pref):POSITION:SET")
+{
+	field(DESC,"Set Position for $(dev)")
+	field(FLNK,"$(pref):POSITION:SET:CALCOUT")
+	field(LOPR,"0")
+	field(HOPR,"$(range)")
+	field(EGU, "mm")
+	field(PINI,"YES")
+	field(PREC,"3")
+}
+
+record(calcout, "$(pref):POSITION:SET:CALCOUT")
+{
+	field(DESC,"$(dev) Position set calcout")
+	field(OUT, "$(pref):STEP:SET PP NMS")
+	field(SCAN,"Passive")
+	field(CALC,"A*B")
+	field(INPA,"$(pref):POSITION:SET NPP NMS")
+	field(INPB,"$(pref):PPMM") 
+}
+
+record(longout, "$(pref):STEP:SET")
+{
+	field(DESC,"$(dev) Position set [step]")
+        field(DTYP, "stream")
+	field(SCAN,"Passive")
+	field(OUT, "@$(proto) moveToPosition($(ndev)) $(port)")
+	field(EGU, "step")
+}
+
+######Jog control
+record(bo, "$(pref):JOGPOS")
+{
+	field(DESC, "$(dev) set JOG positive")
+        field(DTYP, "stream")
+	field(OUT,  "@$(proto) setJogPos($(ndev)) $(port)")
+	field(SCAN, "Passive")
+}
+
+record(bo, "$(pref):JOGNEG")
+{
+	field(DESC, "$(dev) set JOG negative")
+        field(DTYP, "stream")
+	field(SCAN, "Passive")
+	field(OUT,  "@$(proto) setJogNeg($(ndev)) $(port)")
+}
+
+############## encoder related
+record(longin, "$(pref):ENCSTEP:READ")
+{
+	field(DESC, "$(dev) ENC Pos-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getEncoderValue($(ndev)) $(port)")
+	field(EGU,  "step")
+}
+
+record(calc, "$(pref):ENCPOSITION:READ")
+{
+	field(DESC,"$(dev) ENC Pos-RB calcout")
+	field(SCAN,".5 second")
+	field(CALC,"A/B")
+	field(INPA,"$(pref):ENCSTEP:READ PP NMS")
+	field(INPB,"$(pref):PPMM NPP NMS")
+	field(EGU, "mm")
+	field(PREC,"3")
+}
+
+
+record(longout, "$(pref):ENCZERO:SET")
+{
+	field(DESC, "$(dev) set Enc-RB Zero")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setEncoderZero($(ndev)) $(port)")
+}
+
+record(bi, "$(pref):SLSWITCH:READ")
+{
+	field(DESC, "$(dev) get ENC Switch status")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLEnable($(ndev)) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(SCAN, "2 second")
+}
+
+record(bo, "$(pref):SLSWITCH:SET")
+{
+	field(DESC, "$(dev) set ENC Switch status")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setSLEnable($(ndev)) $(port)")
+	field(ZNAM, "OFF")
+	field(ONAM, "ON")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):SLA:READ")
+{
+	field(DESC, "$(dev) SNL max attemp RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLA($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+
+record(longout, "$(pref):SLA:SET")
+{
+	field(DESC, "$(dev) SNL max attemp SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setSLA($(ndev)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+}
+
+record(longin, "$(pref):SLE:READ")
+{
+	field(DESC, "$(dev) SNL Err-Range RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLE($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+record(longout, "$(pref):SLE:SET")
+{
+	field(DESC, "$(dev) SNL Err-Range SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setSLE($(ndev)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+}
+
+record(ai, "$(pref):SLR:READ")
+{
+	field(DESC, "$(dev) SNL Ratio-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLR($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+	field(PREC,  "3")
+}
+record(ao, "$(pref):SLR:SET")
+{
+	field(DESC, "$(dev) SNL Ratio-SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setSLR($(ndev)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+	field(PREC,  "3")
+}
+
+record(longin, "$(pref):SLT:READ")
+{
+	field(DESC, "$(dev) SNL Tol-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLT($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+record(longout, "$(pref):SLT:SET")
+{
+	field(DESC, "$(dev) SNL Tol-SP")
+	field(DTYP, "stream")
+	field(OUT,  "@$(proto) setSLT($(ndev)) $(port)")
+	field(EGU,  "step")
+	field(PINI, "YES")
+}
+
+record(ai, "$(pref):SLSTATUS:READ:AI")
+{
+	field(DESC, "$(dev) SNL status")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLS($(ndev)) $(port)")
+	field(SCAN, ".1 second")
+}
+
+record(mbbi, "$(pref):SLSTATUS:READ")
+{
+	field(DESC, "$(dev) SNL status")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getSLS($(ndev)) $(port)")
+	field(SCAN, ".1 second")
+
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FRVL, "4")
+	field(FVVL, "5")
+	field(SXVL, "6")
+	field(SVVL, "7")
+	field(EIVL, "8")
+	field(NIVL, "9")
+	field(TEVL, "10")
+	field(ELVL, "11")
+	field(TVVL, "12")
+	field(TTVL, "13")
+
+	field(ZRST, "IDEL")
+	field(ONST, "Moving")
+	field(TWST, "Correcting")
+	field(THST, "Stopping")
+	field(FRST, "Aborting")
+	field(FVST, "Jogging")
+	field(SXST, "Homing")
+	field(SVST, "Z-Homing")
+	field(EIST, "Corr. Range Err.")
+	field(NIST, "Corr. Attemp Err.")
+	field(TEST, "Stall Err.")
+	field(ELST, "Limit Err.")
+	field(TVST, "N/A, SNL disabled")
+	field(TTST, "Limit homing")
+}
+
+record(longin, "$(pref):DX:READ")
+{
+	field(DESC, "$(dev) SNL Delta-RB")
+	field(DTYP, "stream")
+	field(INP,  "@$(proto) getDX($(ndev)) $(port)")
+	field(SCAN, "2 second")
+	field(EGU,  "step")
+}
+

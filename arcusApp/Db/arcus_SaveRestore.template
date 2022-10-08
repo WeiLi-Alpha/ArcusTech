@@ -1,0 +1,40 @@
+# arcus_SaveRestore.template
+# Template database for saving and resotre a position of a Stepper Motor
+# Wei Li 25/09/2022
+#
+# substitutions:
+# pref   - prefix of the device, could be RNG:IMAGE-MOTOR1
+# pos    - name of this position
+#
+################################################################################
+
+record(bo,"$(pref):$(pos):BSET") {
+	field(DESC,"$(pos) save button in Motor Control")
+	field(DTYP,"Soft Channel")
+	field(FLNK,"$(pref):$(pos):ASET")
+	field(ZNAM,"OFF")
+	field(ONAM,"SET")
+}
+record(ao,"$(pref):$(pos):ASET") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):$(pos):ARST PP NMS")
+	field(DOL,"$(pref):POSITION:SET PP NMS")
+	field(OMSL,"closed_loop")
+}
+
+record(ao,"$(pref):$(pos):ARST") {
+	field(DESC," ")
+	field(DTYP,"Soft Channel")
+	field(OUT,"$(pref):POSITION:SET PP NMS")
+	field(PREC,"3")
+}
+
+record(bo,"$(pref):$(pos):BRST") {
+	field(DESC,"$(pos) restore button in Motor Control")
+	field(DTYP,"Soft Channel")
+	field(FLNK,"$(pref):$(pos):ARST")
+	field(ZNAM,"OFF")
+	field(ONAM,"RST")
+}
+
