@@ -15,5 +15,5 @@ Refer to the manual:
 
 # Control Pannel with MEDM
 <center>
-    <img src="https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/Motor_ACE-ADE_Full.png" height="400"/><img src="https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/Motor_PMX-2ED-SA_Full.png" height="400"/></center>
+    <img src="https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/Motor_ACE-ADE_Full.png" height="600"/><img src="https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/Motor_PMX-2ED-SA_Full.png" height="600"/></center>
 
