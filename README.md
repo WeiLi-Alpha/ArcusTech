@@ -8,6 +8,26 @@ This is an EPICS IOC for the Arcus stepper motor controller and driver:
 - [asyn](https://github.com/epics-modules/asyn)
 - [stream](https://github.com/epics-modules/stream)
 
+# Parameters Configuration
+## 1. PPMM  
+
+Pulses Per MilliMeter, used to convert the number of pulses in the 
+controller to the unit of mm (or degree if rotation stage), need to 
+be characterized for specified stepper and linear guide.
+
+## 2. LCA
+
+Limit Correction Amount, in the unit of Pulses. When press the home 
+limit button, the motor moves to the specified direction. After 
+hitting the switch button, it reverses the direction by the amount 
+defined by the LCA. 
+
+## 3. Ratio
+
+Ratio between motor pulses and encoder counts. This ratio depends 
+on the motor type, microstepping, encoder resolution and decoding 
+multiplier. Value must be in the range [0.001 , 999.999].
+
 # Reference
 Refer to the manual:
 - [Arcus ACE-SDE Single Axis Controller-Driver Manual Rev 1.24.pdf](https://github.com/WeiLi-Alpha/Arcus/blob/main/Manual/Arcus%20ACE-SDE%20Single%20Axis%20Controller-Driver%20Manual%20Rev%201.24.pdf)
