@@ -19,14 +19,14 @@ Here is a list of the issues that occurred while testing the stepper motor.
 If the stepper motor alternates its direction during moving 
 while it's expected to move in the same direction, the current 
 pulses are not circulating as expected, the reason could be:
-- The internal wire of the motor is broken 
+- The internal wire of the motor is broken  
   => one of the wires might be disconnected;
-- The connection cable is broken 
+- The connection cable is broken   
   => one or two wires might be disconnected;
 - The driver does not send the pulse sequence as expected  
   => one pair of outputs might fail.
 
-Need to check with a multimetera:
+Need to check with a multimeter:
 - Measure the resistance between A-/A and B-/B to see 
   if it's close to zero (usually $\le 1 ~\Omega$). If it goes 
   to infinity, it's disconnected somewhere;
