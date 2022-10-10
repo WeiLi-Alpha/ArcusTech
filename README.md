@@ -26,12 +26,15 @@ This is an EPICS IOC for the Arcus stepper motor controller and driver:
 Pulses Per MilliMeter, used to convert the number of pulses in the 
 controller to the unit of mm (or degree if rotation stage), need to 
 be characterized for specified stepper and linear guide.
-the distance of motion `L` (in the required engineering unit, e.g. mm);
-- this value of `PPMM` should be `10000/L`.
+- set `PPMM` to 1, and move the stepper motor by a number of pulses,  
+e.g. 10000 pulses;
+- measure the distance of motion `L` (in the required engineering 
+unit, e.g. mm);
+- the value of `PPMM` should be set as `10000/L`.
 
 ## 2. LCA
 
-Limit Correction Amount, in the unit of Pulses. When press the home 
+Limit Correction Amount, in the unit of `Pulses`. When press the home 
 limit button, the motor moves to the specified direction. After 
 hitting the switch button, it reverses the direction by the amount 
 defined by the LCA. 
