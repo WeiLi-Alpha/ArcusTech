@@ -9,7 +9,7 @@ This is an EPICS IOC for the Arcus stepper motor controller and driver:
 - [asyn](https://github.com/epics-modules/asyn)
 - [stream](https://github.com/epics-modules/stream)
 - [calc](https://github.com/epics-modules/calc)
-- tested with [base 3.15.6](https://epics-controls.org/resources-and-support/base/series-3-15/3-15-6/)
+- [base 3.15.6](https://epics-controls.org/resources-and-support/base/series-3-15/3-15-6/)
 
 ## Hardwares
 - [single-axis ACE-SDE](https://www.arcus-technology.com/products/single-axis-motion-controller/1-axis-usb-controller-plus-driver) and 
