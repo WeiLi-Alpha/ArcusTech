@@ -4,11 +4,21 @@ This is an EPICS IOC for the Arcus stepper motor controller and driver:
 - [single-axis ACE-SDE](https://www.arcus-technology.com/products/single-axis-motion-controller/1-axis-usb-controller-plus-driver) and 
 - [two-axis PMX-2ED-SA](https://www.arcus-technology.com/products/multi-axis-motion-controller/2-axis-usb-controller-plus-driver/)
 
-# Required Modules
+# Required 
+## Modules
 - [asyn](https://github.com/epics-modules/asyn)
 - [stream](https://github.com/epics-modules/stream)
 - [calc](https://github.com/epics-modules/calc)
 - tested with [base 3.15.6](https://epics-controls.org/resources-and-support/base/series-3-15/3-15-6/)
+
+## Hardwares
+- [single-axis ACE-SDE](https://www.arcus-technology.com/products/single-axis-motion-controller/1-axis-usb-controller-plus-driver) and 
+- [two-axis PMX-2ED-SA](https://www.arcus-technology.com/products/multi-axis-motion-controller/2-axis-usb-controller-plus-driver/)
+- 12V or 24V power supply
+- USB to RS485/422 cable
+- [TM-STPP-23 Hybrid Stepper Motor (NEMA 23)](https://www.arcus-technology.com/products/stepper-motors/tm-stpp-23/)
+- IDC 50 pin Cable Connector
+- IDC50 2x25 Pins 0.1" Male Header Breakout Board
 
 # Parameters Configuration
 ## 1. PPMM  
@@ -16,6 +26,8 @@ This is an EPICS IOC for the Arcus stepper motor controller and driver:
 Pulses Per MilliMeter, used to convert the number of pulses in the 
 controller to the unit of mm (or degree if rotation stage), need to 
 be characterized for specified stepper and linear guide.
+the distance of motion `L` (in the required engineering unit, e.g. mm);
+- this value of `PPMM` should be `10000/L`.
 
 ## 2. LCA
 
@@ -56,6 +68,18 @@ Need to check with a multimeter:
 - Use the multimeter to measure the voltage of the outputs,
   if the voltage difference bwtween a pair of output is always zero,
   that driver chip might have failed.
+
+## Encoder Ratio
+To use stepper motor with encoders, one should properly setup the 
+parameter `Ratio`. The procedures is as follows:
+- properly connect the encoder cable from the stepper motor to the 
+controller;
+- turn off the encoder power stwitch, move the stepper motor by a 
+number of steps N1, and read the encoder position N2, the ratio is
+R=N1/N2;
+- the value R should be a positive value in the range 0.001-999.99, 
+if R is negative, one should try to switch the outputs of A <==> B 
+and /A <==> /B.
 
 # Control Pannel with MEDM
 <center>
