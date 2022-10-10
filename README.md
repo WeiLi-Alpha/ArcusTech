@@ -7,6 +7,8 @@ This is an EPICS IOC for the Arcus stepper motor controller and driver:
 # Required Modules
 - [asyn](https://github.com/epics-modules/asyn)
 - [stream](https://github.com/epics-modules/stream)
+- [calc](https://github.com/epics-modules/calc)
+- tested with [base 3.15.6](https://epics-controls.org/resources-and-support/base/series-3-15/3-15-6/)
 
 # Parameters Configuration
 ## 1. PPMM  
@@ -53,7 +55,7 @@ Need to check with a multimeter:
 - The same diagnostic can be applied to the connection cable;
 - Use the multimeter to measure the voltage of the outputs,
   if the voltage difference bwtween a pair of output is always zero,
-  that driver chip might fail.
+  that driver chip might have failed.
 
 # Control Pannel with MEDM
 <center>
