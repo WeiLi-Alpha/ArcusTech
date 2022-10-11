@@ -1,6 +1,6 @@
 
 file {
-	name="SavePosition_XY.adl"
+	name="/home/epics/baseAppl_release/modules/arcus/arcus/opi/SavePosition_XY.adl"
 	version=030114
 }
 display {
@@ -123,357 +123,313 @@ text {
 	}
 	textix="Y"
 }
-composite {
+"message button" {
+	object {
+		x=245
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS3:BSET"
+		clr=14
+		bclr=2
+	}
+	label="Save"
+	press_msg="SET"
+	release_msg="0"
+	clrmod="discrete"
+}
+"message button" {
+	object {
+		x=295
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS3:BRST"
+		clr=14
+		bclr=2
+	}
+	label="RESET"
+	press_msg="RST"
+	release_msg="0"
+	clrmod="discrete"
+}
+"text update" {
+	object {
+		x=245
+		y=60
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS3:YARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=245
+		y=35
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS3:XARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+text {
+	object {
+		x=245
+		y=10
+		width=95
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="POS3"
+	align="horiz. centered"
+}
+text {
+	object {
+		x=350
+		y=10
+		width=95
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="POS4"
+	align="horiz. centered"
+}
+"text update" {
+	object {
+		x=350
+		y=35
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS4:XARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=350
+		y=60
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS4:YARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"message button" {
+	object {
+		x=350
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS4:BSET"
+		clr=14
+		bclr=2
+	}
+	label="Save"
+	press_msg="SET"
+	release_msg="0"
+	clrmod="discrete"
+}
+"message button" {
+	object {
+		x=400
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS4:BRST"
+		clr=14
+		bclr=2
+	}
+	label="RESET"
+	press_msg="RST"
+	release_msg="0"
+	clrmod="discrete"
+}
+text {
+	object {
+		x=140
+		y=10
+		width=95
+		height=20
+	}
+	"basic attribute" {
+		clr=30
+	}
+	textix="POS2"
+	align="horiz. centered"
+}
+"text update" {
+	object {
+		x=140
+		y=35
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS2:XARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=140
+		y=60
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS2:YARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"message button" {
+	object {
+		x=140
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS2:BSET"
+		clr=14
+		bclr=2
+	}
+	label="Save"
+	press_msg="SET"
+	release_msg="0"
+	clrmod="discrete"
+}
+"message button" {
+	object {
+		x=190
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS2:BRST"
+		clr=14
+		bclr=2
+	}
+	label="RESET"
+	press_msg="RST"
+	release_msg="0"
+	clrmod="discrete"
+}
+text {
 	object {
 		x=35
 		y=10
-		width=410
-		height=95
+		width=95
+		height=20
 	}
-	"composite name"=""
-	children {
-		"message button" {
-			object {
-				x=245
-				y=85
-				width=45
-				height=20
-			}
-			control {
-				chan="$(P)$(R)XPOS1:BSET"
-				clr=14
-				bclr=2
-			}
-			label="Save"
-			press_msg="SET"
-			release_msg="0"
-			clrmod="discrete"
-		}
-		"message button" {
-			object {
-				x=295
-				y=85
-				width=45
-				height=20
-			}
-			control {
-				chan="$(P)$(R)XPOS1:BRST"
-				clr=14
-				bclr=2
-			}
-			label="RESET"
-			press_msg="RST"
-			release_msg="0"
-			clrmod="discrete"
-		}
-		"text update" {
-			object {
-				x=245
-				y=60
-				width=95
-				height=20
-			}
-			monitor {
-				chan="$(P)$(R)XPOS1:ARST"
-				clr=14
-				bclr=2
-			}
-			limits {
-			}
-		}
-		"text update" {
-			object {
-				x=245
-				y=35
-				width=95
-				height=20
-			}
-			monitor {
-				chan="$(P)$(R)XPOS1:ARST"
-				clr=14
-				bclr=2
-			}
-			limits {
-			}
-		}
-		text {
-			object {
-				x=245
-				y=10
-				width=95
-				height=20
-			}
-			"basic attribute" {
-				clr=30
-			}
-			textix="POS3"
-			align="horiz. centered"
-		}
-		text {
-			object {
-				x=350
-				y=10
-				width=95
-				height=20
-			}
-			"basic attribute" {
-				clr=30
-			}
-			textix="POS4"
-			align="horiz. centered"
-		}
-		"text update" {
-			object {
-				x=350
-				y=35
-				width=95
-				height=20
-			}
-			monitor {
-				chan="$(P)$(R)XPOS1:ARST"
-				clr=14
-				bclr=2
-			}
-			limits {
-			}
-		}
-		"text update" {
-			object {
-				x=350
-				y=60
-				width=95
-				height=20
-			}
-			monitor {
-				chan="$(P)$(R)XPOS1:ARST"
-				clr=14
-				bclr=2
-			}
-			limits {
-			}
-		}
-		composite {
-			object {
-				x=350
-				y=85
-				width=95
-				height=20
-			}
-			"composite name"=""
-			children {
-				"message button" {
-					object {
-						x=350
-						y=85
-						width=45
-						height=20
-					}
-					control {
-						chan="$(P)$(R)XPOS1:BSET"
-						clr=14
-						bclr=2
-					}
-					label="Save"
-					press_msg="SET"
-					release_msg="0"
-					clrmod="discrete"
-				}
-				"message button" {
-					object {
-						x=400
-						y=85
-						width=45
-						height=20
-					}
-					control {
-						chan="$(P)$(R)XPOS1:BRST"
-						clr=14
-						bclr=2
-					}
-					label="RESET"
-					press_msg="RST"
-					release_msg="0"
-					clrmod="discrete"
-				}
-			}
-		}
-		composite {
-			object {
-				x=140
-				y=10
-				width=95
-				height=95
-			}
-			"composite name"=""
-			children {
-				text {
-					object {
-						x=140
-						y=10
-						width=95
-						height=20
-					}
-					"basic attribute" {
-						clr=30
-					}
-					textix="POS2"
-					align="horiz. centered"
-				}
-				"text update" {
-					object {
-						x=140
-						y=35
-						width=95
-						height=20
-					}
-					monitor {
-						chan="$(P)$(R)XYPOS2:XARST"
-						clr=14
-						bclr=2
-					}
-					limits {
-					}
-				}
-				"text update" {
-					object {
-						x=140
-						y=60
-						width=95
-						height=20
-					}
-					monitor {
-						chan="$(P)$(R)XYPOS2:YARST"
-						clr=14
-						bclr=2
-					}
-					limits {
-					}
-				}
-				"message button" {
-					object {
-						x=140
-						y=85
-						width=45
-						height=20
-					}
-					control {
-						chan="$(P)$(R)XPOS1:BSET"
-						clr=14
-						bclr=2
-					}
-					label="Save"
-					press_msg="SET"
-					release_msg="0"
-					clrmod="discrete"
-				}
-				"message button" {
-					object {
-						x=190
-						y=85
-						width=45
-						height=20
-					}
-					control {
-						chan="$(P)$(R)XPOS1:BRST"
-						clr=14
-						bclr=2
-					}
-					label="RESET"
-					press_msg="RST"
-					release_msg="0"
-					clrmod="discrete"
-				}
-			}
-		}
-		composite {
-			object {
-				x=35
-				y=10
-				width=95
-				height=95
-			}
-			"composite name"=""
-			children {
-				text {
-					object {
-						x=35
-						y=10
-						width=95
-						height=20
-					}
-					"basic attribute" {
-						clr=30
-					}
-					textix="POS1"
-					align="horiz. centered"
-				}
-				"text update" {
-					object {
-						x=35
-						y=35
-						width=95
-						height=20
-					}
-					monitor {
-						chan="$(P)$(R)XYPOS1:XARST"
-						clr=14
-						bclr=2
-					}
-					limits {
-					}
-				}
-				"text update" {
-					object {
-						x=35
-						y=60
-						width=95
-						height=20
-					}
-					monitor {
-						chan="$(P)$(R)XYPOS1:YARST"
-						clr=14
-						bclr=2
-					}
-					limits {
-					}
-				}
-				"message button" {
-					object {
-						x=35
-						y=85
-						width=45
-						height=20
-					}
-					control {
-						chan="$(P)$(R)XYPOS1:BSET"
-						clr=14
-						bclr=2
-					}
-					label="Save"
-					press_msg="SET"
-					release_msg="0"
-					clrmod="discrete"
-				}
-				"message button" {
-					object {
-						x=85
-						y=85
-						width=45
-						height=20
-					}
-					control {
-						chan="$(P)$(R)XYPOS1:BRST"
-						clr=14
-						bclr=2
-					}
-					label="RESET"
-					press_msg="RST"
-					release_msg="0"
-					clrmod="discrete"
-				}
-			}
-		}
+	"basic attribute" {
+		clr=30
 	}
+	textix="POS1"
+	align="horiz. centered"
+}
+"text update" {
+	object {
+		x=35
+		y=35
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS1:XARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=35
+		y=60
+		width=95
+		height=20
+	}
+	monitor {
+		chan="$(P)$(R)XYPOS1:YARST"
+		clr=14
+		bclr=2
+	}
+	limits {
+	}
+}
+"message button" {
+	object {
+		x=35
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS1:BSET"
+		clr=14
+		bclr=2
+	}
+	label="Save"
+	press_msg="SET"
+	release_msg="0"
+	clrmod="discrete"
+}
+"message button" {
+	object {
+		x=85
+		y=85
+		width=45
+		height=20
+	}
+	control {
+		chan="$(P)$(R)XYPOS1:BRST"
+		clr=14
+		bclr=2
+	}
+	label="RESET"
+	press_msg="RST"
+	release_msg="0"
+	clrmod="discrete"
 }
 composite {
 	object {
