@@ -36,8 +36,8 @@ unit, e.g. mm);
 
 Limit Correction Amount, in the unit of `Pulses`. When press the home 
 limit button, the motor moves to the specified direction. After 
-hitting the switch button, it reverses the direction by the amount 
-defined by the LCA. 
+hitting the switch button, it moves in the reversed direction by the 
+number of steps defined by the LCA. 
 
 ## 3. Ratio
 
