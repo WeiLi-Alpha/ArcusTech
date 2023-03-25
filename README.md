@@ -73,11 +73,11 @@ Need to check with a multimeter:
   that driver chip might have failed.
 
 ## Encoder Ratio
-To use stepper motor with encoders, one should properly setup the 
+To use a stepper motor with encoders, one should properly set up the 
 parameter `Ratio`. The procedures is as follows:
 - properly connect the encoder cable from the stepper motor to the 
 controller;
-- turn off the encoder power stwitch, move the stepper motor by a 
+- turn off the encoder power switch, move the stepper motor by a 
 number of steps N1, and read the encoder position N2, the ratio is
 R=N1/N2;
 - the value R should be a positive value in the range 0.001-999.99, 
