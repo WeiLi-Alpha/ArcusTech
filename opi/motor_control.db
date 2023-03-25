@@ -1,0 +1,40 @@
+record(stringout, "ACE-SDE:MOTOR1:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "ACE-SDE:MOTOR2:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "ACE-SDE:MOTOR3:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "ACE-SDE:MOTOR4:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "PMX-2ED-SA:MOTOR1:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "PMX-2ED-SA:MOTOR2:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "PMX-2ED-SA:MOTOR3:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}
+record(stringout, "PMX-2ED-SA:MOTOR4:IOC:NAME")
+{
+        field("VAL", "IOC Host Name")
+        field(PINI,"YES")
+}

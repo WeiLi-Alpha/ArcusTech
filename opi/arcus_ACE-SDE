@@ -1,0 +1,50 @@
+#!/bin/bash
+# Usage: arcusMotor TEST MOTOR1 start|stop
+if [ $# -lt 3 ]; then
+    echo "Usage: arcusMotor TEST/SYSNAME MOTOR1/2/3/4 start|stop"
+    exit
+fi
+
+# this bash script inherits the system environments from csh
+# no need to re-define them
+SHELLCONFIG=/home/epics/localProg_release/shell/epics_env_CentOS7.csh
+EPICSUSER=wl227
+# IOCDIR=$EPICS_MODULES/areaDetector/ADAravis/iocs/aravisIOC/iocBoot/iocAravis
+IOCDIR=/home/wl227/test/iocBoot/iocTestIOC
+CMD=startioc
+iocfile=st.cmd
+
+#CAMMODEL=`echo "$1" | awk '{print toupper($0)}'`
+#CAMNAME=`echo "$2" | awk '{print toupper($0)}'`
+CONTROLLER=`echo "$1" | awk '{print toupper($0)}'`
+MOTORNAME=`echo "$2" | awk '{print toupper($0)}'`
+#CAMNAMElower=`echo "$2" | awk '{print tolower($0)}'`
+#IOCNAME=`caget $CONTROLLER:$MOTORNAME:IOC:NAME | awk '{print $2}'`
+IOCNAME=baker
+
+## if [ $3 = stop ]; then
+##     if [ `hostname --short` != $IOCNAME ] || [ $USER != $EPICSUSER ]; then
+## 	ssh -Y -f $EPICSUSER@$IOCNAME "source ${SHELLCONFIG}; ${IOCDIR}/${CMD} ${iocfile} stop"
+##     else
+## 	${IOCDIR}/${CMD} ${iocfile} stop
+##     fi
+##     exit 0
+## fi
+## 
+## if [ $3 = start ]; then
+##     if [ `hostname --short` != $IOCNAME ] || [ $USER != $EPICSUSER ]; then
+## 	ssh -Y -f $EPICSUSER@$IOCNAME "source ${SHELLCONFIG}; ${IOCDIR}/${CMD} ${iocfile} start"
+##     else
+## 	${IOCDIR}/${CMD} ${iocfile} start
+##     fi
+##     exit 0
+## fi
+
+####source ${SHELLCONFIG} sets the system environment for the ssh session
+if [ `hostname --short` != $IOCNAME ] || [ $USER != $EPICSUSER ]; then
+    ssh -Y -f $EPICSUSER@$IOCNAME "source ${SHELLCONFIG}; cd $IOCDIR; bash ./st.cmd.generator $CONTROLLER $MOTORNAME $iocfile; ${IOCDIR}/${CMD} ${iocfile} $3"
+else
+    cd $IOCDIR;
+    bash ./st.cmd.generator $CONTROLLER $MOTORNAME $iocfile;
+    ${IOCDIR}/${CMD} ${iocfile} $3
+fi

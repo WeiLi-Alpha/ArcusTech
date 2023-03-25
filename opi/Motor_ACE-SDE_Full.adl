@@ -1,6 +1,6 @@
 
 file {
-	name="Motor_ACE-SDE_Full.adl"
+	name="/home/epics/baseAppl_release/modules/arcus/opi/Motor_ACE-SDE_Full.adl"
 	version=030114
 }
 display {
@@ -252,7 +252,7 @@ composite {
 		height=55
 	}
 	"composite name"=""
-	"composite file"="SavePosition_Axis.adl"
+	"composite file"="Motor_SavePosition_Axis.adl"
 }
 composite {
 	object {

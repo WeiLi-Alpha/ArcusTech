@@ -1,6 +1,6 @@
 
 file {
-	name="Motor_Axis_X_Full.adl"
+	name="/home/epics/baseAppl_release/modules/arcus/opi/Motor_Axis_X_Full.adl"
 	version=030114
 }
 display {
@@ -106,7 +106,7 @@ composite {
 		height=55
 	}
 	"composite name"=""
-	"composite file"="SavePosition_X.adl"
+	"composite file"="Motor_SavePosition_X.adl"
 }
 text {
 	object {

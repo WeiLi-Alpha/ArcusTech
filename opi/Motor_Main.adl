@@ -1,19 +1,19 @@
 
 file {
-	name="Motor_Main.adl"
+	name="/home/epics/baseAppl_release/modules/arcus/opi/Motor_Main.adl"
 	version=030114
 }
 display {
 	object {
-		x=0
-		y=364
-		width=727
-		height=444
+		x=524
+		y=64
+		width=848
+		height=467
 	}
 	clr=0
 	bclr=14
 	cmap=""
-	gridSpacing=5
+	gridSpacing=10
 	gridOn=0
 	snapToGrid=0
 }
@@ -138,59 +138,6 @@ text {
 	textix="Start|Stop"
 	align="horiz. centered"
 }
-"related display" {
-	object {
-		x=10
-		y=90
-		width=160
-		height=25
-	}
-	display[0] {
-		label="ACE-SDE:MOTOR1"
-		name="Motor_ACE-SDE_Full.adl"
-		args="P=ACE-SDE:, R=MOTOR1:"
-	}
-	clr=14
-	bclr=4
-	label="ACE-SDE-M1"
-}
-"text entry" {
-	object {
-		x=175
-		y=90
-		width=125
-		height=25
-	}
-	control {
-		chan="ACE-SDE:MOTOR1:IOC:NAME"
-		clr=14
-		bclr=0
-	}
-	format="string"
-	limits {
-	}
-}
-"shell command" {
-	object {
-		x=310
-		y=90
-		width=130
-		height=25
-	}
-	command[0] {
-		label="Start ACE-SDE-MOTOR1"
-		name=""
-		args="ACE-SDE MOTOR1 start"
-	}
-	command[1] {
-		label="Stop ACE-SDE-MOTOR1"
-		name=""
-		args="ACE-SDE MOTOR1 stop"
-	}
-	clr=14
-	bclr=4
-	label="Start|Stop"
-}
 text {
 	object {
 		x=450
@@ -207,29 +154,28 @@ text {
 "related display" {
 	object {
 		x=10
-		y=125
-		width=160
-		height=25
+		y=90
+		width=192
+		height=30
 	}
 	display[0] {
-		label="ACE-SDE:MOTOR2"
+		label="ACE-SDE:MOTOR1"
 		name="Motor_ACE-SDE_Full.adl"
-		args="P=ACE-SDE:, R=MOTOR2:"
-		policy="replace display"
+		args="P=ACE-SDE:, R=MOTOR1:"
 	}
 	clr=14
 	bclr=4
-	label="ACE-SDE-M2"
+	label="ACE-SDE-M1"
 }
 "text entry" {
 	object {
-		x=175
-		y=125
-		width=125
-		height=25
+		x=208
+		y=90
+		width=150
+		height=30
 	}
 	control {
-		chan="ACE-SDE:MOTOR2:IOC:NAME"
+		chan="ACE-SDE:MOTOR1:IOC:NAME"
 		clr=14
 		bclr=0
 	}
@@ -239,20 +185,20 @@ text {
 }
 "shell command" {
 	object {
-		x=310
-		y=125
-		width=130
-		height=25
+		x=370
+		y=90
+		width=156
+		height=30
 	}
 	command[0] {
-		label="Start ACE-SDE-MOTOR2"
-		name=""
-		args="ACE-SDE MOTOR2 start"
+		label="Start ACE-SDE-MOTOR1"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR1 start"
 	}
 	command[1] {
-		label="Stop ACE-SDE-MOTOR2"
-		name=""
-		args="ACE-SDE MOTOR2 stop"
+		label="Stop ACE-SDE-MOTOR1"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR1 stop"
 	}
 	clr=14
 	bclr=4
@@ -260,9 +206,9 @@ text {
 }
 "text update" {
 	object {
-		x=450
+		x=538
 		y=90
-		width=200
+		width=240
 		height=25
 	}
 	monitor {
@@ -276,9 +222,9 @@ text {
 }
 "text update" {
 	object {
-		x=450
-		y=125
-		width=200
+		x=538
+		y=132
+		width=240
 		height=25
 	}
 	monitor {
@@ -290,12 +236,205 @@ text {
 	limits {
 	}
 }
+"shell command" {
+	object {
+		x=370
+		y=132
+		width=156
+		height=30
+	}
+	command[0] {
+		label="Start ACE-SDE-MOTOR2"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR2 start"
+	}
+	command[1] {
+		label="Stop ACE-SDE-MOTOR2"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR2 stop"
+	}
+	clr=14
+	bclr=4
+	label="Start|Stop"
+}
+"text entry" {
+	object {
+		x=208
+		y=132
+		width=150
+		height=30
+	}
+	control {
+		chan="ACE-SDE:MOTOR2:IOC:NAME"
+		clr=14
+		bclr=0
+	}
+	format="string"
+	limits {
+	}
+}
 "related display" {
 	object {
 		x=10
-		y=160
-		width=160
+		y=132
+		width=192
+		height=30
+	}
+	display[0] {
+		label="ACE-SDE:MOTOR2"
+		name="Motor_ACE-SDE_Full.adl"
+		args="P=ACE-SDE:, R=MOTOR2:"
+		policy="replace display"
+	}
+	clr=14
+	bclr=4
+	label="ACE-SDE-M2"
+}
+"related display" {
+	object {
+		x=10
+		y=174
+		width=192
+		height=30
+	}
+	display[0] {
+		label="ACE-SDE:MOTOR3"
+		name="Motor_ACE-SDE_Full.adl"
+		args="P=ACE-SDE:, R=MOTOR3:"
+	}
+	clr=14
+	bclr=4
+	label="ACE-SDE-M3"
+}
+"text entry" {
+	object {
+		x=208
+		y=174
+		width=150
+		height=30
+	}
+	control {
+		chan="ACE-SDE:MOTOR3:IOC:NAME"
+		clr=14
+		bclr=0
+	}
+	format="string"
+	limits {
+	}
+}
+"shell command" {
+	object {
+		x=370
+		y=174
+		width=156
+		height=30
+	}
+	command[0] {
+		label="Start ACE-SDE-MOTOR1"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR1 start"
+	}
+	command[1] {
+		label="Stop ACE-SDE-MOTOR1"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR1 stop"
+	}
+	clr=14
+	bclr=4
+	label="Start|Stop"
+}
+"text update" {
+	object {
+		x=538
+		y=174
+		width=240
 		height=25
+	}
+	monitor {
+		chan="ACE-SDE:MOTOR3:ID"
+		clr=15
+		bclr=14
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=538
+		y=216
+		width=240
+		height=25
+	}
+	monitor {
+		chan="ACE-SDE:MOTOR4:ID"
+		clr=15
+		bclr=14
+	}
+	format="string"
+	limits {
+	}
+}
+"shell command" {
+	object {
+		x=370
+		y=216
+		width=156
+		height=30
+	}
+	command[0] {
+		label="Start ACE-SDE-MOTOR4"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR4 start"
+	}
+	command[1] {
+		label="Stop ACE-SDE-MOTOR4"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="ACE-SDE MOTOR4 stop"
+	}
+	clr=14
+	bclr=4
+	label="Start|Stop"
+}
+"text entry" {
+	object {
+		x=208
+		y=216
+		width=150
+		height=30
+	}
+	control {
+		chan="ACE-SDE:MOTOR4:IOC:NAME"
+		clr=14
+		bclr=0
+	}
+	format="string"
+	limits {
+	}
+}
+"related display" {
+	object {
+		x=10
+		y=216
+		width=192
+		height=30
+	}
+	display[0] {
+		label="ACE-SDE:MOTOR4"
+		name="Motor_ACE-SDE_Full.adl"
+		args="P=ACE-SDE:, R=MOTOR4:"
+		policy="replace display"
+	}
+	clr=14
+	bclr=4
+	label="ACE-SDE-M4"
+}
+"related display" {
+	object {
+		x=10
+		y=258
+		width=192
+		height=30
 	}
 	display[0] {
 		label="PMX-2ED-SA:MOTOR1"
@@ -306,12 +445,108 @@ text {
 	bclr=4
 	label="PMX-2ED-SA-M1"
 }
+"related display" {
+	object {
+		x=10
+		y=300
+		width=192
+		height=30
+	}
+	display[0] {
+		label="PMX-2ED-SA:MOTOR2"
+		name="Motor_PMX-2ED-SA_Full.adl"
+		args="P=PMX-2ED-SA:, R=MOTOR2:"
+	}
+	clr=14
+	bclr=4
+	label="PMX-2ED-SA-M2"
+}
+"related display" {
+	object {
+		x=10
+		y=342
+		width=192
+		height=30
+	}
+	display[0] {
+		label="PMX-2ED-SA:MOTOR3"
+		name="Motor_PMX-2ED-SA_Full.adl"
+		args="P=PMX-2ED-SA:, R=MOTOR3:"
+	}
+	clr=14
+	bclr=4
+	label="PMX-2ED-SA-M3"
+}
+"related display" {
+	object {
+		x=10
+		y=384
+		width=192
+		height=30
+	}
+	display[0] {
+		label="PMX-2ED-SA:MOTOR4"
+		name="Motor_PMX-2ED-SA_Full.adl"
+		args="P=PMX-2ED-SA:, R=MOTOR4:"
+	}
+	clr=14
+	bclr=4
+	label="PMX-2ED-SA-M4"
+}
 "text entry" {
 	object {
-		x=175
-		y=160
-		width=125
-		height=25
+		x=208
+		y=384
+		width=150
+		height=30
+	}
+	control {
+		chan="PMX-2ED-SA:MOTOR4:IOC:NAME"
+		clr=14
+		bclr=0
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=208
+		y=342
+		width=150
+		height=30
+	}
+	control {
+		chan="PMX-2ED-SA:MOTOR3:IOC:NAME"
+		clr=14
+		bclr=0
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=208
+		y=300
+		width=150
+		height=30
+	}
+	control {
+		chan="PMX-2ED-SA:MOTOR2:IOC:NAME"
+		clr=14
+		bclr=0
+	}
+	format="string"
+	limits {
+	}
+}
+"text entry" {
+	object {
+		x=208
+		y=258
+		width=150
+		height=30
 	}
 	control {
 		chan="PMX-2ED-SA:MOTOR1:IOC:NAME"
@@ -324,20 +559,83 @@ text {
 }
 "shell command" {
 	object {
-		x=310
-		y=160
-		width=130
-		height=25
+		x=370
+		y=258
+		width=156
+		height=30
 	}
 	command[0] {
 		label="Start PMX-2ED-SA-MOTOR1"
-		name=""
+		name="/home/epics/localProg_release/scripts/arcusMotor"
 		args="PMX-2ED-SA MOTOR1 start"
 	}
 	command[1] {
 		label="Stop PMX-2ED-SA-MOTOR1"
-		name=""
+		name="/home/epics/localProg_release/scripts/arcusMotor"
 		args="PMX-2ED-SA MOTOR1 stop"
+	}
+	clr=14
+	bclr=4
+	label="Start|Stop"
+}
+"shell command" {
+	object {
+		x=370
+		y=300
+		width=156
+		height=30
+	}
+	command[0] {
+		label="Start PMX-2ED-SA-MOTOR2"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="PMX-2ED-SA MOTOR2 start"
+	}
+	command[1] {
+		label="Stop PMX-2ED-SA-MOTOR2"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="PMX-2ED-SA MOTOR2 stop"
+	}
+	clr=14
+	bclr=4
+	label="Start|Stop"
+}
+"shell command" {
+	object {
+		x=370
+		y=342
+		width=156
+		height=30
+	}
+	command[0] {
+		label="Start PMX-2ED-SA-MOTOR3"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="PMX-2ED-SA MOTOR3 start"
+	}
+	command[1] {
+		label="Stop PMX-2ED-SA-MOTOR3"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="PMX-2ED-SA MOTOR3 stop"
+	}
+	clr=14
+	bclr=4
+	label="Start|Stop"
+}
+"shell command" {
+	object {
+		x=370
+		y=384
+		width=156
+		height=30
+	}
+	command[0] {
+		label="Start PMX-2ED-SA-MOTOR4"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="PMX-2ED-SA MOTOR4 start"
+	}
+	command[1] {
+		label="Stop PMX-2ED-SA-MOTOR4"
+		name="/home/epics/localProg_release/scripts/arcusMotor"
+		args="PMX-2ED-SA MOTOR4 stop"
 	}
 	clr=14
 	bclr=4
@@ -345,9 +643,57 @@ text {
 }
 "text update" {
 	object {
-		x=450
-		y=160
-		width=200
+		x=538
+		y=384
+		width=240
+		height=25
+	}
+	monitor {
+		chan="PMX-2ED-SA:MOTOR4:ID"
+		clr=15
+		bclr=14
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=538
+		y=342
+		width=240
+		height=25
+	}
+	monitor {
+		chan="PMX-2ED-SA:MOTOR3:ID"
+		clr=15
+		bclr=14
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=538
+		y=300
+		width=240
+		height=25
+	}
+	monitor {
+		chan="PMX-2ED-SA:MOTOR2:ID"
+		clr=15
+		bclr=14
+	}
+	format="string"
+	limits {
+	}
+}
+"text update" {
+	object {
+		x=538
+		y=258
+		width=240
 		height=25
 	}
 	monitor {

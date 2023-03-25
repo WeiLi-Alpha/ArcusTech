@@ -1,6 +1,6 @@
 
 file {
-	name="Motor_PMX-2ED-SA_Full.adl"
+	name="/home/epics/baseAppl_release/modules/arcus/opi/./Motor_PMX-2ED-SA_Full.adl"
 	version=030114
 }
 display {
@@ -125,5 +125,5 @@ composite {
 		height=105
 	}
 	"composite name"=""
-	"composite file"="SavePosition_XY.adl"
+	"composite file"="Motor_SavePosition_XY.adl"
 }
